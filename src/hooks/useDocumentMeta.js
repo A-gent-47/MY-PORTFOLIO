@@ -12,28 +12,28 @@ import { useScene } from '../context/SceneContext';
 const ROOM_META = {
     null: {
         path: '/',
-        title: 'ITom — Creative 3D Portfolio',
-        description: 'Interactive 3D developer portfolio by Tomasz "ITom" Szmajda. Explore WebGL experiments, React projects & GSAP animations in a hand-drawn gallery.',
+        title: 'AMIT — Amit Kumar Yadav | 3D Portfolio',
+        description: 'Computer Science (AI & ML) student building interactive web applications, AI tools, and embedded hardware prototypes.',
     },
     about: {
         path: '/about',
-        title: 'About Me — ITom Portfolio',
-        description: 'Learn about Tomasz "ITom" Szmajda — a creative frontend developer specializing in 3D web experiences, React, Three.js, and GSAP animations.',
+        title: 'About Me — AMIT Portfolio',
+        description: 'Learn about Amit Kumar Yadav (AMIT) — B.Tech CSE (AI & ML) Student & Developer building interactive web apps, AI tools, and embedded hardware prototypes.',
     },
     gallery: {
         path: '/gallery',
-        title: 'Gallery & Projects — ITom Portfolio',
-        description: 'Browse the interactive 3D gallery of web development projects by ITom. Each project is displayed as a hand-drawn card you can flip and explore.',
+        title: 'Gallery & Projects — AMIT Portfolio',
+        description: 'Browse the interactive 3D gallery of web, AI, and hardware projects by Amit Kumar Yadav (AMIT).',
     },
     studio: {
         path: '/studio',
-        title: 'The Studio — ITom Portfolio',
-        description: 'Explore ITom\'s content studio — YouTube videos, blog posts, and TikToks displayed on floating monitors in an immersive 3D space.',
+        title: 'The Studio — AMIT Portfolio',
+        description: 'Explore AMIT\'s studio — videos, posts, and updates displayed on floating monitors in an interactive 3D space.',
     },
     contact: {
         path: '/contact',
-        title: 'Contact — ITom Portfolio',
-        description: 'Get in touch with Tomasz "ITom" Szmajda. Find social media links and contact information in this interactive 3D contact room.',
+        title: 'Contact — AMIT Portfolio',
+        description: 'Get in touch with Amit Kumar Yadav (AMIT). Find social media links and contact options in this interactive 3D contact room.',
     },
 };
 
@@ -82,12 +82,12 @@ export function useDocumentMeta() {
         if (ogDesc) ogDesc.setAttribute('content', meta.description);
 
         const ogUrl = document.querySelector('meta[property="og:url"]');
-        if (ogUrl) ogUrl.setAttribute('content', `https://itomdev.com${meta.path}`);
+        if (ogUrl) ogUrl.setAttribute('content', `https://your-portfolio.vercel.app${meta.path}`);
 
         // Update canonical link to ensure virtual routes are correctly indexable as separate pages
         const canonicalTag = document.querySelector('link[rel="canonical"]');
         if (canonicalTag) {
-            canonicalTag.setAttribute('href', `https://itomdev.com${meta.path}`);
+            canonicalTag.setAttribute('href', `https://your-portfolio.vercel.app${meta.path}`);
         }
 
         // Push to browser history (only if not handling a popstate event and room actually changed)

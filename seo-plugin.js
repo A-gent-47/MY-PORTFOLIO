@@ -1,15 +1,15 @@
 import { CONTENT_DATA } from './src/components/canvas/rooms/Studio/contentData.js';
 
 // Local fallback SEO/GEO data — bypasses Sanity CMS fetches so builds work 100% offline
+const SITE_URL = 'https://your-portfolio.vercel.app';
+
 const LOCAL_GLOBAL_INFO = {
-    siteTitle: 'Tomasz "ITom" Szmajda | Creative 3D Portfolio',
-    siteDescription: "Interactive 3D developer portfolio by Tomasz 'ITom' Szmajda. Explore WebGL experiments, React projects & GSAP animations in a hand-drawn gallery.",
-    aboutMe: 'My name is Tomasz Szmajda (ITom), and I am a dedicated Frontend Developer specializing in interactive 3D web experiences with React, Three.js, React Three Fiber, and GSAP.',
-    githubUrl: 'https://github.com/ITomPoland',
-    linkedinUrl: 'https://www.linkedin.com/in/tomasz-szmajda-259337305/',
-    instagramUrl: 'https://www.instagram.com/itom.dev/',
-    xUrl: 'https://x.com/ITom_Dev',
-    youtubeUrl: 'https://www.youtube.com/@itompoland',
+    siteTitle: 'Amit Kumar Yadav (AMIT) | Creative 3D Portfolio',
+    siteDescription: 'Computer Science (AI & ML) student building interactive web applications, AI tools, and embedded hardware prototypes.',
+    aboutMe: 'Amit Kumar Yadav (AMIT) — Gandhinagar, Gujarat. B.Tech CSE (AI/ML) student at Karnavati University (UIT, 2026–2030, 1st Sem) and DAV Public School alumnus (Class XII: 86%, Class X: 92%), building practical, user-focused software & embedded technology solutions with C, Arduino (Mega/Uno), Tinkercad, and prototyping.',
+    githubUrl: 'https://github.com/A-gent-47',
+    linkedinUrl: 'https://www.linkedin.com/in/amit-yadav-990768447/',
+    instagramUrl: 'https://www.instagram.com/amit_kumar_yadav444/',
 };
 
 const LOCAL_PROJECTS = [
@@ -71,7 +71,7 @@ const LOCAL_FAQ = [];
 function getLocalSeoData() {
     const studio = CONTENT_DATA.map(item => ({
         ...item,
-        thumbnailUrl: item.frontTexture ? `https://itomdev.com${item.frontTexture}` : undefined,
+        thumbnailUrl: item.frontTexture ? `${SITE_URL}${item.frontTexture}` : undefined,
     }));
 
     return {
@@ -117,13 +117,13 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
     // --- 1. Person: Central node of the Knowledge Graph ---
     const person = {
         '@type': 'Person',
-        '@id': 'https://itomdev.com/#person',
-        name: 'Tomasz Szmajda',
-        alternateName: ['ITom', 'ITom Dev', 'Tomasz ITom Szmajda'],
-        url: 'https://itomdev.com',
-        jobTitle: 'Creative Frontend Developer',
-        description: globalInfo?.aboutMe || 'Creative developer specializing in 3D web experiences.',
-        knowsAbout: ['React', 'Three.js', 'JavaScript', 'TypeScript', 'GSAP', 'Next.js', 'WebGL', '3D Graphics', 'Web Development'],
+        '@id': `${SITE_URL}/#person`,
+        name: 'Amit Kumar Yadav',
+        alternateName: ['AMIT'],
+        url: SITE_URL,
+        jobTitle: 'B.Tech CSE (AI & ML) Student & Developer',
+        description: globalInfo?.aboutMe || 'Computer Science (AI & ML) student building interactive web applications, AI tools, and embedded hardware prototypes.',
+        knowsAbout: ['C', 'Arduino (Mega/Uno)', 'Tinkercad', 'Prototyping', 'Artificial Intelligence', 'Machine Learning', 'React', 'Three.js', 'Web Development'],
         sameAs: [
             globalInfo?.linkedinUrl,
             globalInfo?.githubUrl,
@@ -138,21 +138,21 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
     // --- 2. WebSite ---
     const website = {
         '@type': 'WebSite',
-        '@id': 'https://itomdev.com/#website',
-        url: 'https://itomdev.com',
-        name: globalInfo?.siteTitle || 'Tomasz "ITom" Szmajda | Creative 3D Portfolio',
-        description: globalInfo?.siteDescription || 'Interactive 3D Developer Portfolio by Tomasz Szmajda',
-        publisher: { '@id': 'https://itomdev.com/#person' }
+        '@id': `${SITE_URL}/#website`,
+        url: SITE_URL,
+        name: globalInfo?.siteTitle || 'Amit Kumar Yadav (AMIT) | Creative 3D Portfolio',
+        description: globalInfo?.siteDescription || 'Computer Science (AI & ML) student building interactive web applications, AI tools, and embedded hardware prototypes.',
+        publisher: { '@id': `${SITE_URL}/#person` }
     };
     graph.push(website);
 
     // --- 3. ProfilePage ---
     const profilePage = {
         '@type': 'ProfilePage',
-        '@id': 'https://itomdev.com/#profilepage',
-        url: 'https://itomdev.com',
-        mainEntity: { '@id': 'https://itomdev.com/#person' },
-        about: { '@id': 'https://itomdev.com/#person' }
+        '@id': `${SITE_URL}/#profilepage`,
+        url: SITE_URL,
+        mainEntity: { '@id': `${SITE_URL}/#person` },
+        about: { '@id': `${SITE_URL}/#person` }
     };
     graph.push(profilePage);
 
@@ -160,7 +160,7 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
     if (faqList && faqList.length > 0) {
         const faqPage = {
             '@type': 'FAQPage',
-            '@id': 'https://itomdev.com/#faq',
+            '@id': `${SITE_URL}/#faq`,
             mainEntity: faqList.map(item => ({
                 '@type': 'Question',
                 name: item.question,
@@ -177,9 +177,9 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
     if (projects && projects.length > 0) {
         graph.push({
             '@type': 'ItemList',
-            '@id': 'https://itomdev.com/#projectslist',
-            name: 'Portfolio Projects by Tomasz "ITom" Szmajda',
-            description: 'Selected web development projects showcasing React, Three.js, and creative frontend engineering.',
+            '@id': `${SITE_URL}/#projectslist`,
+            name: 'Portfolio Projects by Amit Kumar Yadav (AMIT)',
+            description: 'Selected web, AI, and hardware development projects.',
             numberOfItems: projects.length,
             itemListElement: projects.map((p, i) => ({
                 '@type': 'ListItem',
@@ -189,7 +189,7 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
                     name: p.seoTitle || p.title,
                     description: p.seoDescription || p.description || '',
                     url: p.url || undefined,
-                    creator: { '@id': 'https://itomdev.com/#person' },
+                    creator: { '@id': `${SITE_URL}/#person` },
                     ...(p.techStack && p.techStack.length > 0 ? {
                         keywords: p.techStack.map(t => TECH_STACK_NAMES[t] || t).join(', ')
                     } : {}),
@@ -202,11 +202,11 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
             const projectSlug = p.title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
             graph.push({
                 '@type': 'CreativeWork',
-                '@id': `https://itomdev.com/#project-${projectSlug}`,
+                '@id': `${SITE_URL}/#project-${projectSlug}`,
                 name: p.seoTitle || p.title,
                 description: p.seoDescription || p.description || '',
                 url: p.url || undefined,
-                creator: { '@id': 'https://itomdev.com/#person' },
+                creator: { '@id': `${SITE_URL}/#person` },
                 ...(p.techStack && p.techStack.length > 0 ? {
                     keywords: p.techStack.map(t => TECH_STACK_NAMES[t] || t).join(', ')
                 } : {}),
@@ -229,66 +229,66 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
 
                 graph.push({
                     '@type': 'VideoObject',
-                    '@id': `https://itomdev.com/#${studioSlug}`,
+                    '@id': `${SITE_URL}/#${studioSlug}`,
                     name: s.seoTitle || s.title,
                     description: s.seoDescription || s.description || '',
                     url: s.url || undefined,
                     contentUrl: s.url || undefined,
                     ...(embedUrl ? { embedUrl } : {}),
-                    thumbnailUrl: s.thumbnailUrl || 'https://itomdev.com/og-image.webp',
+                    thumbnailUrl: s.thumbnailUrl || `${SITE_URL}/og-image.webp`,
                     ...(s.duration ? { duration: `PT${s.duration.replace(':', 'M')}S` } : {}),
                     ...(s.date ? { uploadDate: formatIsoDate(s.date) } : {}),
                     ...(s.views ? { interactionStatistic: { '@type': 'InteractionCounter', interactionType: 'https://schema.org/WatchAction', userInteractionCount: s.views } } : {}),
-                    author: { '@id': 'https://itomdev.com/#person' },
+                    author: { '@id': `${SITE_URL}/#person` },
                 });
             } else if (s.platform === 'blog') {
                 graph.push({
                     '@type': 'Article',
-                    '@id': `https://itomdev.com/#${studioSlug}`,
+                    '@id': `${SITE_URL}/#${studioSlug}`,
                     headline: s.seoTitle || s.title,
                     description: s.seoDescription || s.description || '',
                     url: s.url || undefined,
-                    image: s.thumbnailUrl || 'https://itomdev.com/og-image.webp',
+                    image: s.thumbnailUrl || `${SITE_URL}/og-image.webp`,
                     ...(s.date ? { datePublished: formatIsoDate(s.date) } : {}),
                     ...(s.readTime ? { timeRequired: `PT${s.readTime.replace(' min', '')}M` } : {}),
-                    author: { '@id': 'https://itomdev.com/#person' },
+                    author: { '@id': `${SITE_URL}/#person` },
                 });
             } else if (s.platform === 'tiktok') {
                 graph.push({
                     '@type': 'VideoObject',
-                    '@id': `https://itomdev.com/#${studioSlug}`,
+                    '@id': `${SITE_URL}/#${studioSlug}`,
                     name: s.seoTitle || s.title,
                     description: s.seoDescription || s.description || '',
                     url: s.url || undefined,
                     contentUrl: s.url || undefined,
-                    thumbnailUrl: s.thumbnailUrl || 'https://itomdev.com/og-image.webp',
+                    thumbnailUrl: s.thumbnailUrl || `${SITE_URL}/og-image.webp`,
                     ...(s.date ? { uploadDate: formatIsoDate(s.date) } : {}),
                     ...(s.views ? { interactionStatistic: { '@type': 'InteractionCounter', interactionType: 'https://schema.org/WatchAction', userInteractionCount: s.views } } : {}),
                     ...(s.likes ? { aggregateRating: { '@type': 'AggregateRating', ratingCount: s.likes } } : {}),
-                    author: { '@id': 'https://itomdev.com/#person' },
+                    author: { '@id': `${SITE_URL}/#person` },
                 });
             } else if (s.platform === 'instagram' || s.platform === 'x' || s.platform === 'linkedin') {
                 graph.push({
                     '@type': 'SocialMediaPosting',
-                    '@id': `https://itomdev.com/#${studioSlug}`,
+                    '@id': `${SITE_URL}/#${studioSlug}`,
                     headline: s.seoTitle || s.title,
                     description: s.seoDescription || s.description || '',
                     url: s.url || undefined,
-                    image: s.thumbnailUrl || 'https://itomdev.com/og-image.webp',
+                    image: s.thumbnailUrl || `${SITE_URL}/og-image.webp`,
                     ...(s.date ? { datePublished: formatIsoDate(s.date) } : {}),
                     ...(s.likes ? { interactionStatistic: { '@type': 'InteractionCounter', interactionType: 'https://schema.org/LikeAction', userInteractionCount: s.likes } } : {}),
-                    author: { '@id': 'https://itomdev.com/#person' },
+                    author: { '@id': `${SITE_URL}/#person` },
                 });
             } else if (s.platform === 'codrops') {
                 graph.push({
                     '@type': 'Article',
-                    '@id': `https://itomdev.com/#${studioSlug}`,
+                    '@id': `${SITE_URL}/#${studioSlug}`,
                     headline: s.seoTitle || s.title,
                     description: s.seoDescription || s.description || '',
                     url: s.url || undefined,
-                    image: s.thumbnailUrl || 'https://itomdev.com/og-image.webp',
+                    image: s.thumbnailUrl || `${SITE_URL}/og-image.webp`,
                     ...(s.date ? { datePublished: formatIsoDate(s.date) } : {}),
-                    author: { '@id': 'https://itomdev.com/#person' },
+                    author: { '@id': `${SITE_URL}/#person` },
                 });
             }
         });
@@ -299,8 +299,8 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
         const categoryLabels = { sotd: 'Site of the Day', sotm: 'Site of the Month', other: 'Honorable Mention' };
         graph.push({
             '@type': 'ItemList',
-            '@id': 'https://itomdev.com/#awardslist',
-            name: 'Web Design Awards received by Tomasz "ITom" Szmajda',
+            '@id': `${SITE_URL}/#awardslist`,
+            name: 'Web Design Awards received by Amit Kumar Yadav (AMIT)',
             numberOfItems: awards.length,
             itemListElement: awards.map((a, i) => ({
                 '@type': 'ListItem',
@@ -312,7 +312,7 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
                     url: a.url || undefined,
                     description: a.seoDescription || undefined,
                     award: categoryLabels[a.category] || a.category,
-                    creator: { '@id': 'https://itomdev.com/#person' },
+                    creator: { '@id': `${SITE_URL}/#person` },
                 }
             }))
         });
@@ -326,9 +326,9 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
 
 // Helper to generate the llms.txt content in clean Markdown
 function buildLlmsTxt(globalInfo, projects, studio, awards, faqList) {
-    const siteTitle = globalInfo?.siteTitle || 'Tomasz "ITom" Szmajda | Creative 3D Portfolio';
-    const siteDescription = globalInfo?.siteDescription || 'Interactive 3D Developer Portfolio';
-    const aboutMe = globalInfo?.aboutMe || 'I am a creative developer specializing in 3D web experiences.';
+    const siteTitle = globalInfo?.siteTitle || 'Amit Kumar Yadav (AMIT) | Creative 3D Portfolio';
+    const siteDescription = globalInfo?.siteDescription || 'Computer Science (AI & ML) student building interactive web applications, AI tools, and embedded hardware prototypes.';
+    const aboutMe = globalInfo?.aboutMe || 'I am Amit Kumar Yadav (AMIT), a B.Tech CSE (AI & ML) Student & Developer.';
 
     let content = `# ${siteTitle}\n`;
     content += `> ${siteDescription}\n\n`;
@@ -337,13 +337,13 @@ function buildLlmsTxt(globalInfo, projects, studio, awards, faqList) {
     content += `${aboutMe}\n\n`;
 
     content += `## Core Technologies & Skills\n`;
-    content += `- React, Three.js, React Three Fiber (R3F), GSAP (GreenSock), JavaScript, TypeScript, Next.js, WebGL, 3D Graphics, Web Development.\n\n`;
+    content += `- C, Arduino (Mega/Uno), Tinkercad, Prototyping, AI & ML, React, Three.js, React Three Fiber (R3F), GSAP, WebGL.\n\n`;
 
     if (projects && projects.length > 0) {
         content += `## Selected Portfolio Projects\n`;
         projects.forEach(p => {
             const tech = p.techStack ? ` (Tech: ${p.techStack.map(t => TECH_STACK_NAMES[t] || t).join(', ')})` : '';
-            content += `- [${p.seoTitle || p.title}](${p.url || 'https://itomdev.com'}): ${p.seoDescription || p.description || ''}${tech}\n`;
+            content += `- [${p.seoTitle || p.title}](${p.url || SITE_URL}): ${p.seoDescription || p.description || ''}${tech}\n`;
         });
         content += `\n`;
     }
@@ -351,7 +351,7 @@ function buildLlmsTxt(globalInfo, projects, studio, awards, faqList) {
     if (studio && studio.length > 0) {
         content += `## Studio Content & Publications\n`;
         studio.forEach(s => {
-            content += `- [${s.seoTitle || s.title} (${s.platform})](${s.url || 'https://itomdev.com'}): ${s.seoDescription || s.description || ''}\n`;
+            content += `- [${s.seoTitle || s.title} (${s.platform})](${s.url || SITE_URL}): ${s.seoDescription || s.description || ''}\n`;
         });
         content += `\n`;
     }
@@ -361,7 +361,7 @@ function buildLlmsTxt(globalInfo, projects, studio, awards, faqList) {
         const categoryLabels = { sotd: 'Site of the Day', sotm: 'Site of the Month', other: 'Honorable Mention' };
         awards.forEach(a => {
             const category = categoryLabels[a.category] || a.category;
-            content += `- **${category}** — [${a.seoTitle || a.title}](${a.url || 'https://itomdev.com'}): Awarded on ${a.date || 'unknown'}. ${a.seoDescription || ''}\n`;
+            content += `- **${category}** — [${a.seoTitle || a.title}](${a.url || SITE_URL}): Awarded on ${a.date || 'unknown'}. ${a.seoDescription || ''}\n`;
         });
         content += `\n`;
     }
@@ -409,10 +409,10 @@ export function generateSeoHtml() {
             try {
                 const { globalInfo, projects, studio, awards, faqList } = getLocalSeoData();
 
-                // Fallback values if globalInfo is not yet created in Sanity
-                const siteTitle = globalInfo?.siteTitle || 'ITom - Creative Developer';
-                const siteDescription = globalInfo?.siteDescription || 'Interactive 3D portfolio of a creative web developer.';
-                const aboutMe = globalInfo?.aboutMe || 'I am a creative developer specializing in 3D web experiences.';
+                // Fallback values if globalInfo is not yet created
+                const siteTitle = globalInfo?.siteTitle || 'Amit Kumar Yadav (AMIT) | Creative 3D Portfolio';
+                const siteDescription = globalInfo?.siteDescription || 'Computer Science (AI & ML) student building interactive web applications, AI tools, and embedded hardware prototypes.';
+                const aboutMe = globalInfo?.aboutMe || 'I am Amit Kumar Yadav (AMIT), a B.Tech CSE (AI & ML) Student & Developer.';
                 const escapeAttr = (val) => String(val).replace(/"/g, '&quot;');
 
                 // Cache llms.txt content for later bundle emission

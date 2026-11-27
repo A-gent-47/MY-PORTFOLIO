@@ -148,6 +148,7 @@ const STORY_CYCLE_LENGTH = 160;
 // Pokój About jest na Z = -25, więc -25 to drzwi pokoju
 // -27 = 2 metry za drzwiami (w głąb pokoju) - musi matchować CORRIDOR_CLIP_Z w SkyChunk
 const MILESTONE_CORRIDOR_CLIP_Z = -8.0;
+const SHOW_AWARDS = false;
 
 const InfiniteSkyManager = ({ scrollProgressRef }) => {
     // PRE-CALCULATED FOR scrolProgress = 0
@@ -230,10 +231,12 @@ const InfiniteSkyManager = ({ scrollProgressRef }) => {
                     />
 
                     {/* === AWARDS MILESTONE === */}
-                    <AwardsMilestone
-                        z={-(cycleIndex * STORY_CYCLE_LENGTH + 55)}
-                        scrollProgressRef={scrollProgressRef}
-                    />
+                    {SHOW_AWARDS && (
+                        <AwardsMilestone
+                            z={-(cycleIndex * STORY_CYCLE_LENGTH + 55)}
+                            scrollProgressRef={scrollProgressRef}
+                        />
+                    )}
 
                     {/* === JOURNEY MILESTONE === */}
                     <JourneyMilestone
@@ -352,20 +355,20 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 anchorY="middle"
                 font="/fonts/RubikScribble-Regular.ttf"
             >
-                TOMASZ SZMAJDA
+                AMIT KUMAR YADAV
             </Text>
 
             {/* Subtitle - Brand (spreads right) */}
             <Text
                 ref={brandRef}
                 position={[0, 4.3, 0.1]}
-                fontSize={0.45}
+                fontSize={0.4}
                 color="#4a4a4a"
                 anchorX="center"
                 anchorY="middle"
                 font="/fonts/CabinSketch-Regular.ttf"
             >
-                (ITOM)
+                (AMIT) • Gandhinagar, Gujarat
             </Text>
 
             {/* Avatar on cloud - floating + spreads up-left */}
@@ -390,7 +393,7 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 font="/fonts/CabinSketch-Regular.ttf"
                 fontStyle="italic"
             >
-                "Crafting digital experiences
+                "Building practical, user-focused
             </Text>
 
             {/* Motto - Line 2 (spreads left) */}
@@ -404,26 +407,21 @@ const IntroMilestone = ({ z, scrollProgressRef }) => {
                 font="/fonts/CabinSketch-Regular.ttf"
                 fontStyle="italic"
             >
-                that push creative boundaries"
+                software & embedded technology solutions"
             </Text>
         </group>
     );
 };
 
 /**
- * MOCK DATA FOR AWARDS
+ * AWARDS DATA (cleared until personal awards are added)
  */
 const AWARDS_DATA = {
     featured: {
         id: 'award-featured',
         layout: 'certificate_grid',
         title: 'Featured Projects Collection',
-        items: [
-            { label: 'Featured - Awwwards', date: 'May 2025', image: '/textures/about/FEATURED.webp', url: 'https://awwwards.com' },
-            { label: 'Featured - CSS Design Awards', date: 'June 2025', image: '/textures/about/FEATURED.webp', url: 'https://cssdesignawards.com' },
-            { label: 'Featured - The FWA', date: 'July 2025', image: '/textures/about/FEATURED.webp', url: 'https://thefwa.com' },
-            { label: 'Featured - Behance', date: 'August 2025', image: '/textures/about/FEATURED.webp', url: 'https://behance.net' },
-        ],
+        items: [],
         platformConfig: {
             label: 'HONOR',
             color: '#1a1a1a',
@@ -434,12 +432,7 @@ const AWARDS_DATA = {
         id: 'award-sotd',
         layout: 'certificate_grid',
         title: 'Site of the Day Awards',
-        items: [
-            { label: 'SOTD - GSAP', date: 'February 13, 2026', image: '/textures/about/SOTDAYYOUNGMULTIGSAP.webp', url: 'https://www.linkedin.com/posts/greensock_site-of-the-day-young-multi-this-immersive-activity-7427567524940017664-zU2n?utm_source=share&utm_medium=member_desktop&rcm=ACoAAE3TV6UBqXoaJXUN5-1s3ij6SQJwTRAcbCM' },
-            { label: 'SOTD - CSS Winner', date: 'January 24, 2026', image: '/textures/about/SOTDAYYOUNGMULTICSSWINNER.webp', url: 'https://www.csswinner.com/details/young-multi-official-experience/19045' },
-            { label: 'SOTD - Orpetron', date: 'January 29, 2026', image: '/textures/about/SOTDAYYOUNGMULTIORPETRON.webp', url: 'https://orpetron.com/sites/young-multi/' },
-            { label: 'SOTD - Design Nominess', date: 'February 17, 2026', image: '/textures/about/SOTDAYYOUNGMULTIDESIGNNOMINESS.webp', url: 'https://www.designnominees.com/sites/young-multi' }
-        ],
+        items: [],
         platformConfig: {
             label: 'AWARD',
             color: '#1a1a1a',
@@ -915,10 +908,10 @@ const JourneyMilestone = ({ z, scrollProgressRef }) => {
                 anchorY="middle"
                 font="/fonts/CabinSketch-Regular.ttf"
             >
-                My path so far...
+                Gandhinagar, Gujarat • Education & Foundations
             </Text>
 
-            {/* === UO ISLAND (Left) === */}
+            {/* === ISLAND 1: DAV PUBLIC SCHOOL (Left) === */}
             <group ref={uoRef} position={[-3.5, -1, 0]}>
                 <mesh>
                     <planeGeometry args={[islandHeight * uoAspect, islandHeight]} />
@@ -928,20 +921,29 @@ const JourneyMilestone = ({ z, scrollProgressRef }) => {
                         side={THREE.DoubleSide}
                     />
                 </mesh>
-                {/* NAPIS NA WYSPIE (UO) - EDYTUJ TUTAJ */}
                 <Text
-                    position={[0.1, -0.85, 0.1]} // POZYCJA (X, Y, Z)
-                    fontSize={0.4}           // WIELKOŚĆ
+                    position={[0.05, -0.72, 0.1]}
+                    fontSize={0.21}
                     color="#1a1a1a"
                     anchorX="center"
                     anchorY="middle"
                     font="/fonts/CabinSketch-Bold.ttf"
                 >
-                    2025-NOW
+                    DAV Public School
+                </Text>
+                <Text
+                    position={[0.05, -1.0, 0.1]}
+                    fontSize={0.135}
+                    color="#333333"
+                    anchorX="center"
+                    anchorY="middle"
+                    font="/fonts/CabinSketch-Regular.ttf"
+                >
+                    Class X: 92% • Class XII: 86%
                 </Text>
             </group>
 
-            {/* === FREELANCE ISLAND (Right) === */}
+            {/* === ISLAND 2: KARNAVATI UNIVERSITY (Right) === */}
             <group ref={freelanceRef} position={[3.5, -2, 0.5]}>
                 <mesh>
                     <planeGeometry args={[islandHeight * freelanceAspect, islandHeight]} />
@@ -951,16 +953,35 @@ const JourneyMilestone = ({ z, scrollProgressRef }) => {
                         side={THREE.DoubleSide}
                     />
                 </mesh>
-                {/* NAPIS NA WYSPIE (Freelance) - EDYTUJ TUTAJ */}
                 <Text
-                    position={[0, -0.65, 0.1]} // POZYCJA (X, Y, Z)
-                    fontSize={0.5}           // WIELKOŚĆ
+                    position={[0, -0.44, 0.1]}
+                    fontSize={0.22}
                     color="#1a1a1a"
                     anchorX="center"
                     anchorY="middle"
                     font="/fonts/CabinSketch-Bold.ttf"
                 >
-                    2023-NOW
+                    2026–2030
+                </Text>
+                <Text
+                    position={[0, -0.68, 0.1]}
+                    fontSize={0.2}
+                    color="#1a1a1a"
+                    anchorX="center"
+                    anchorY="middle"
+                    font="/fonts/CabinSketch-Bold.ttf"
+                >
+                    Karnavati University (UIT)
+                </Text>
+                <Text
+                    position={[0, -0.92, 0.1]}
+                    fontSize={0.145}
+                    color="#333333"
+                    anchorX="center"
+                    anchorY="middle"
+                    font="/fonts/CabinSketch-Regular.ttf"
+                >
+                    B.Tech CSE (AI/ML) • 1st Sem
                 </Text>
             </group>
         </group>
