@@ -11,6 +11,7 @@ const LOCAL_GLOBAL_INFO = {
     githubUrl: 'https://github.com/A-gent-47',
     linkedinUrl: 'https://www.linkedin.com/in/amit-yadav-990768447',
     instagramUrl: 'https://www.instagram.com/amit_kumar_yadav444/',
+    redditUrl: 'https://www.reddit.com/user/Euphoric-Ad-3632/',
 };
 
 const LOCAL_PROJECTS = [
@@ -129,6 +130,7 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
             globalInfo?.linkedinUrl,
             globalInfo?.githubUrl,
             globalInfo?.instagramUrl,
+            globalInfo?.redditUrl,
             globalInfo?.xUrl,
             globalInfo?.tiktokUrl,
             globalInfo?.youtubeUrl
@@ -344,6 +346,7 @@ function buildLlmsTxt(globalInfo, projects, studio, awards, faqList) {
     if (globalInfo?.githubUrl) content += `- GitHub: ${globalInfo.githubUrl}\n`;
     if (globalInfo?.linkedinUrl) content += `- LinkedIn: ${globalInfo.linkedinUrl}\n`;
     if (globalInfo?.instagramUrl) content += `- Instagram: ${globalInfo.instagramUrl}\n`;
+    if (globalInfo?.redditUrl) content += `- Reddit: ${globalInfo.redditUrl}\n`;
     content += `\n`;
 
     content += `## Core Technologies & Skills\n`;
@@ -449,6 +452,7 @@ export function generateSeoHtml() {
                 if (globalInfo?.email) seoHtml += `    <a href="mailto:${globalInfo.email}">${globalInfo.email}</a>\n`;
                 if (globalInfo?.githubUrl) seoHtml += `    <a href="${globalInfo.githubUrl}">GitHub</a>\n`;
                 if (globalInfo?.linkedinUrl) seoHtml += `    <a href="${globalInfo.linkedinUrl}">LinkedIn</a>\n`;
+                if (globalInfo?.redditUrl) seoHtml += `    <a href="${globalInfo.redditUrl}">Reddit</a>\n`;
                 seoHtml += `  </section>\n`;
 
                 if (projects && projects.length > 0) {

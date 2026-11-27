@@ -213,6 +213,7 @@ const ContactRoom = ({ showRoom, onReady, isExiting, isWarmup }) => {
     const targetRotX = useRef(0);
     const targetRotY = useRef(0);
     const targetRotZ = useRef(0);
+    const preLookDownRot = useRef({ x: 0, y: 0, z: 0 });
 
     // Reset camera rotation when teleporting starts
     useEffect(() => {
@@ -248,42 +249,32 @@ const ContactRoom = ({ showRoom, onReady, isExiting, isWarmup }) => {
     }, [hasSignaledReady.current, showRoom, camera]);
 
     const handleMailSelect = () => {
-        // Awaryjne przekierowanie mailto:
-        window.location.href = 'mailto:amitkumaryadav4444s@gmail.com';
+        // Capture current look rotation so user can return to barrels if desired
+        preLookDownRot.current = {
+            x: camera.rotation.x,
+            y: camera.rotation.y,
+            z: camera.rotation.z,
+        };
 
-        /* 
         setShowSelection(false);
 
-        // Trigger the look down sequence
+        // Trigger the look down sequence to show MessagePaper on the dock
         hasAnimatedDown.current = true;
         hasExitTriggered.current = false;
 
-        // Capture landing rotation (usually 0,0,0)
-        targetRotX.current = camera.rotation.x;
-        targetRotY.current = camera.rotation.y;
-        targetRotZ.current = camera.rotation.z;
-
-        // Start sequence directly
-        setCurrentPhase(PHASE.LOOKING_DOWN);
-
-        // 1. SET X (Looking down)
         targetRotX.current = CAMERA_SETTINGS.lookDownAngle;
+        targetRotY.current = CAMERA_SETTINGS.forceCenterY !== null ? CAMERA_SETTINGS.forceCenterY : camera.rotation.y;
+        targetRotZ.current = CAMERA_SETTINGS.forceStraightZ !== null ? CAMERA_SETTINGS.forceStraightZ : camera.rotation.z;
 
-        // 2. SET Y (Turning)
-        if (CAMERA_SETTINGS.forceCenterY !== null) {
-            targetRotY.current = CAMERA_SETTINGS.forceCenterY;
-        }
+        setCurrentPhase(PHASE.WRITING);
+    };
 
-        // 3. SET Z (Tilt)
-        if (CAMERA_SETTINGS.forceStraightZ !== null) {
-            targetRotZ.current = CAMERA_SETTINGS.forceStraightZ;
-        }
-
-        // Phase transition
-        setTimeout(() => {
-            setCurrentPhase(PHASE.WRITING);
-        }, 1500);
-        */
+    const handleMailBack = () => {
+        targetRotX.current = preLookDownRot.current.x;
+        targetRotY.current = preLookDownRot.current.y;
+        targetRotZ.current = preLookDownRot.current.z;
+        setCurrentPhase(PHASE.ENTERING);
+        setShowSelection(true);
     };
 
     // Frame Loop
@@ -418,13 +409,13 @@ const ContactRoom = ({ showRoom, onReady, isExiting, isWarmup }) => {
                 paintOnBeforeCompile={onBeforeCompile}
                 paintUniforms={uniformsData}
             />
-            {/* FACEBOOK (disabled until profile link is provided) */}
+            {/* REDDIT */}
             <SocialBarrel
                 position={isMobile ? [1.2, 0.5, -10] : [3, 0.5, -10]}
                 rotation={[0, -0.2, 0]}
                 texturePath="/textures/contact/beczka.webp"
-                label="FACEBOOK"
-                onClick={undefined}
+                label="REDDIT"
+                onClick={() => window.open('https://www.reddit.com/user/Euphoric-Ad-3632/', '_blank')}
                 paintOnBeforeCompile={onBeforeCompile}
                 paintUniforms={uniformsData}
             />
@@ -504,9 +495,9 @@ const ContactRoom = ({ showRoom, onReady, isExiting, isWarmup }) => {
             <group visible={!showSelection}>
                 <MessagePaper
                     position={[0, 0.07, 2]}
-                    onSend={(data) => {
-                        // console.log('📬 Contact form submitted:', data);
-                        unlockAchievement('contact_submit');
+                    onBack={handleMailBack}
+                    onSend={() => {
+                        unlockAchievement('contact_choose');
                     }}
                 />
             </group>
