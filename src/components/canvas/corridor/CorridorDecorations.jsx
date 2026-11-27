@@ -330,6 +330,7 @@ const CorridorDecorations = ({ segmentLength, zOffset, corridorWidth = 4, corrid
     const frameTexture = useTexture('/textures/corridor/ramkanazdjecieduza.webp');
     const framePaintedTexture = useTexture('/textures/corridor/ramkanazdjecieduza_painted.webp');
     const standingFrameTexture = useTexture('/textures/corridor/ramkanazdjeciemala.webp');
+    const standingArtTexture = useTexture('/textures/corridor/rysuneknaobraz_knight.webp');
     const treeTexture = useTexture('/textures/corridor/drzewkowdoniczce.webp');
     const grateTexture = useTexture('/textures/corridor/kratkawentylacyjna.webp');
     const flowerTexture = useTexture('/textures/corridor/kwiatekwdoniczce.webp');
@@ -404,11 +405,11 @@ const CorridorDecorations = ({ segmentLength, zOffset, corridorWidth = 4, corrid
             height: 2.5 / 1.785,
             y: 0.25,
             id: 'frame-3',
-            signature: "Empty canvas!\nWant your art here?\nContact me!",
-            signatureX: 0,
-            signatureY: 0,
-            signatureSize: 0.12,
-            signatureColor: '#333333'
+            image: '/textures/corridor/rysuneknaobraz_synthwave.webp',
+            imagePainted: '/textures/corridor/rysuneknaobraz_synthwave_painted.webp',
+            imageWidth: 1.9,
+            imageHeight: 0.95,
+            offsetFromWall: 0.1
         },
         {
             z: zOffset - 55,         // Między About a Connect (relZ -50 do -60)
@@ -417,11 +418,11 @@ const CorridorDecorations = ({ segmentLength, zOffset, corridorWidth = 4, corrid
             height: 2.5 / 1.785,
             y: 0.35,
             id: 'frame-4',
-            signature: "Empty canvas!\nWant your art here?\nContact me!",
-            signatureX: 0,
-            signatureY: 0,
-            signatureSize: 0.12,
-            signatureColor: '#333333'
+            image: '/textures/corridor/rysuneknaobraz_embedded_ai.webp',
+            imagePainted: '/textures/corridor/rysuneknaobraz_embedded_ai_painted.webp',
+            imageWidth: 1.9,
+            imageHeight: 0.95,
+            offsetFromWall: 0.1
         },
     ], [zOffset]);
 
@@ -615,19 +616,31 @@ const CorridorDecorations = ({ segmentLength, zOffset, corridorWidth = 4, corrid
 
             {/* === STOJĄCA RAMKA NA SZAFCE (STANDING FRAME) === */}
             {/* Stoi na szafce: Y = floorY + 1.0 (wysokość szafki) + połowa wysokości ramki */}
-            <mesh
+            <group
                 position={[wallX - 0.26, floorY + 1.0 + 0.2, zOffset - 51]}
                 rotation={[0, -Math.PI / 2 + 0.2, 0]} // Lekki obrót, żeby nie stała idealnie prosto
             >
-                <planeGeometry args={[0.3, 0.3 / 0.777]} />
-                <meshBasicMaterial color="#e0e0e0"
-                    map={standingFrameTexture}
-                    transparent={true}
-                    alphaTest={0.1}
-                    side={THREE.DoubleSide}
-                    roughness={0.8}
-                />
-            </mesh>
+                <mesh>
+                    <planeGeometry args={[0.3, 0.3 / 0.777]} />
+                    <meshBasicMaterial color="#e0e0e0"
+                        map={standingFrameTexture}
+                        transparent={true}
+                        alphaTest={0.1}
+                        side={THREE.DoubleSide}
+                        roughness={0.8}
+                    />
+                </mesh>
+                <mesh position={[0, 0.01, 0.002]}>
+                    <planeGeometry args={[0.2, 0.2]} />
+                    <meshBasicMaterial color="#e0e0e0"
+                        map={standingArtTexture}
+                        transparent={true}
+                        alphaTest={0.1}
+                        side={THREE.DoubleSide}
+                        roughness={0.8}
+                    />
+                </mesh>
+            </group>
 
 
             {/* === DRZEWKO W DONICZCE (POTTED TREE) === */}

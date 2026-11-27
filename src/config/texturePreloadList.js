@@ -86,6 +86,11 @@ export const CORRIDOR_TEXTURES = [
     '/textures/corridor/szafkaprzodgora.webp',
     '/textures/corridor/rysuneknaobraz1.webp',
     '/textures/corridor/rysuneknaobrazek3.webp',
+    '/textures/corridor/rysuneknaobraz_knight.webp',
+    '/textures/corridor/rysuneknaobraz_synthwave.webp',
+    '/textures/corridor/rysuneknaobraz_synthwave_painted.webp',
+    '/textures/corridor/rysuneknaobraz_embedded_ai.webp',
+    '/textures/corridor/rysuneknaobraz_embedded_ai_painted.webp',
     // DoorSection extras
     '/textures/corridor/strzalka.webp',
     '/textures/corridor/doors/door_back.webp',
