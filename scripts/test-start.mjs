@@ -53,6 +53,7 @@ function setup({ reduced = false } = {}) {
   const notice = new Element();
   const document = Object.assign(new Element(), {
     hidden: false,
+    getElementById: () => null,
     querySelector: () => notice,
     querySelectorAll: selector => selector === '.work-link' ? links : [links[1]],
     createElement: () => new Element(),
@@ -78,18 +79,21 @@ function setup({ reduced = false } = {}) {
 
 test('all destinations are present in HTML, and the portfolio appears once', () => {
   const anchors = [...html.matchAll(/<a\b([^>]+)>([\s\S]*?)<\/a>/g)];
-  assert.equal(anchors.length, 14); // Thirteen destinations and the skip link.
+  assert.equal(anchors.length, 8); // Skip link + 3 work links + 4 profile/contact links.
   assert.equal(anchors.filter(match => /href="\/"/.test(match[1])).length, 1);
-  assert.equal(anchors.filter(match => /data-pending/.test(match[1])).length, 8);
+  assert.equal(anchors.filter(match => /data-pending/.test(match[1])).length, 0);
   const urls = anchors.map(match => match[1].match(/href="(https:[^"]+)"/)?.[1]).filter(Boolean);
   assert.deepEqual(urls, [
-    'https://www.facebook.com/people/ITom/61586563487664/',
-    'https://github.com/ITomPoland',
-    'https://www.instagram.com/itom.dev/',
-    'https://www.linkedin.com/in/tomasz-szmajda-259337305/',
+    'https://knightfall-chess-zeta.vercel.app/',
+    'https://synthwave-pied.vercel.app/',
+    'https://github.com/A-gent-47',
+    'https://www.linkedin.com/in/amit-yadav-990768447',
+    'https://www.reddit.com/user/Euphoric-Ad-3632/',
   ]);
-  assert.match(html, /aria-label="Interactive Portfolio"/);
-  assert.match(html, /aria-label="UI Sketchbook"/);
+  assert.match(html, /href="mailto:amitkumaryadav4444s@gmail\.com"/);
+  assert.match(html, /aria-label="3D Portfolio"/);
+  assert.match(html, /aria-label="Knightfall Chess"/);
+  assert.match(html, /aria-label="SYNTHWAVE Visualizer"/);
 });
 
 test('static entry stays isolated and uses only one locally hosted font', () => {

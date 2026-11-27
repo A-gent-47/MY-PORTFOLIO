@@ -284,11 +284,11 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
                     ...(s.likes ? { interactionStatistic: { '@type': 'InteractionCounter', interactionType: 'https://schema.org/LikeAction', userInteractionCount: s.likes } } : {}),
                     author: { '@id': `${SITE_URL}/#person` },
                 });
-            } else if (s.platform === 'codrops') {
+            } else if (s.platform === 'codrops' || s.platform === 'webapp' || s.platform === 'github') {
                 graph.push({
-                    '@type': 'Article',
+                    '@type': s.platform === 'webapp' ? 'WebApplication' : s.platform === 'github' ? 'SoftwareSourceCode' : 'Article',
                     '@id': `${SITE_URL}/#${studioSlug}`,
-                    headline: s.seoTitle || s.title,
+                    ...(s.platform === 'codrops' ? { headline: s.seoTitle || s.title } : { name: s.seoTitle || s.title }),
                     description: s.seoDescription || s.description || '',
                     url: s.url || undefined,
                     image: s.thumbnailUrl || `${SITE_URL}/og-image.webp`,
