@@ -8,6 +8,7 @@ import { playBackgroundMusic } from '../../../utils/audioManager';
 import { useAchievements } from '../../../context/AchievementsContext';
 import { isTouchDevice } from '../../../utils/deviceDetect';
 import EntranceBugs from './EntranceBugs';
+import HangingMouse from './HangingMouse';
 
 // Use same font as App.jsx preload (Inter) - works reliably
 const FONT_URL = 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff';
@@ -414,16 +415,7 @@ const EntranceDoors = ({
         rightPupilRef.current.position.y = THREE.MathUtils.lerp(rightPupilRef.current.position.y, 0.28 + targetY, 0.1);
     });
 
-    // --- Mouse Swinging Animation ---
-    const mousePivotRef = useRef();
-    useFrame(({ clock }) => {
-        if (mousePivotRef.current) {
-            // Gentle swing: sin wave
-            // Amplitude: 0.05 radians (approx 3 degrees)
-            // Speed: 1.5
-            mousePivotRef.current.rotation.x = Math.sin(clock.elapsedTime * 1.5) * 0.05;
-        }
-    });
+    // Mouse swinging physics handled by <HangingMouse />
 
 
 
@@ -820,24 +812,8 @@ const EntranceDoors = ({
                         depthWrite={false}
                     />
                 </mesh>
-                {/* Mouse Hanging - Pivot Group for swinging */}
-                {/* Pivot is moved UP by ~2.0 to be near the top of the string/branch */}
-                {/* Original Mesh Y was 0.02. New Pivot Y is 0.02 + 2.0 = 2.02 */}
-                {/* Mouse Hanging - Pivot Group for swinging */}
-                {/* Pivot: 421, 597px. Offset relative to center: X=0.351, Y=-0.456 */}
-                {/* Group Position shift: (-0.01, 0.02) + (0.351, -0.456) = (0.341, -0.436) */}
-                <group ref={mousePivotRef} position={[0.341, 0.02 - 0.456, 0]}>
-                    {/* Mesh moves opposite to pivot offset to keep visual position */}
-                    <mesh position={[-0.351, 0.456, 0]}>
-                        <planeGeometry args={[6, 8]} />
-                        <meshBasicMaterial color="#e0e0e0"
-                            map={mouseTexture}
-                            transparent={true}
-                            alphaTest={0.01}
-                            depthWrite={false}
-                        />
-                    </mesh>
-                </group>
+                {/* Interactive Hanging Mouse & Cord */}
+                <HangingMouse mouseTexture={mouseTexture} />
             </group>
 
             {/* CAT SKETCH (Front Facing) */}
