@@ -151,10 +151,11 @@ const SmoothButton = ({ texture, onClick, position, size, text, fontPath }) => {
 const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || '';
 
 // Only these domains are allowed to submit the form.
-// Includes localhost for local testing and *.vercel.app / custom Vercel domains.
+// 'localhost' and '127.0.0.1' are enabled for local testing; replace/add your final Vercel or Cloudflare custom domain below.
 const ALLOWED_ORIGINS = [
     'localhost',
     '127.0.0.1',
+    // TODO: Add your final Vercel or Cloudflare domain here (e.g. 'your-custom-domain.com')
     'your-portfolio.vercel.app',
     'vercel.app',
 ];

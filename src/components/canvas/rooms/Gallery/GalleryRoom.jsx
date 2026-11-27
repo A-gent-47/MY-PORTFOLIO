@@ -34,42 +34,73 @@ export const GALLERY_INTERACTION_AUDIO_SETTINGS = {
 };
 
 // Define the unique projects and their textures
+// Temporarily mapped to the existing 4 texture pairs in public/textures/gallery/ until custom card artwork is added.
 const FALLBACK_PROJECTS = [
     {
-        id: 'monetune',
-        title: 'MONETUNE',
+        id: 'knightfall',
+        title: 'KNIGHTFALL',
+        subtitle: 'Chess Platform • Live Web App',
         front: '/textures/gallery/monetuneprzod.webp',
         painted: '/textures/gallery/monetuneprzod_painted.webp',
-        url: 'https://monetune.pl',
-        description: 'MoneTune is a step-by-step blueprint that teaches beginners how to generate passive income using AI-created music. Without any musical skills, you will learn how to easily produce professional tracks, publish them on platforms like Spotify, and monetize your digital assets.',
-        techStack: ['/textures/gallery/wordpresslogo.webp', '/textures/gallery/elementorlogo.webp', '/textures/gallery/phplogo.webp', '/textures/gallery/csslogo.webp']
+        url: 'https://knightfall-chess-zeta.vercel.app/',
+        githubUrl: 'https://github.com/A-gent-47/knightfall-chess',
+        description: 'Interactive chess platform featuring a built-in tactical puzzle library, multi-difficulty bots with distinct personalities and playstyles, move-by-move mistake analysis, and custom themes.',
+        techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/tailwindlogo.webp', '/textures/gallery/csslogo.webp']
     },
     {
-        id: 'timber',
-        title: 'TIMBERKITTY',
+        id: 'synthwave',
+        title: 'SYNTHWAVE',
+        subtitle: 'Immersive Music Visualizer • Live Web App',
         front: '/textures/gallery/timberkittyprzod.webp',
         painted: '/textures/gallery/timberkittyprzod_painted.webp',
-        url: 'https://timberkitty.netlify.app',
-        description: 'TimberKitty is an addictive, free-to-play browser arcade game built in pure JavaScript. Players control a lumberjack cat to chop wood, save birds, complete daily missions, and compete on global leaderboards.',
-        techStack: ['/textures/gallery/jslogo.webp', '/textures/gallery/htmllogo.webp', '/textures/gallery/csslogo.webp', '/textures/gallery/firebaselogo.webp']
+        url: 'https://synthwave-pied.vercel.app/',
+        githubUrl: 'https://github.com/A-gent-47/SYNTHWAVE-',
+        description: 'Interactive audio-reactive music visualizer delivering an immersive synthwave visual experience directly in the browser.',
+        techStack: ['/textures/gallery/jslogo.webp', '/textures/gallery/htmllogo.webp', '/textures/gallery/csslogo.webp']
     },
     {
-        id: 'young',
-        title: 'YOUNG MULTI',
+        id: 'kisansetu',
+        title: 'KISANSETU (SIH 2026)',
+        subtitle: 'Smart India Hackathon • SIH26032',
         front: '/textures/gallery/youngmultiprzod.webp',
         painted: '/textures/gallery/youngmultiprzod_painted.webp',
-        url: 'https://young-multi-strona.netlify.app',
-        description: 'A sleek, modern concept website dedicated to the Polish rapper and creator Young Multi. It serves as a promotional landing page designed to highlight his personal brand, music, and online presence.',
-        techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/tailwindlogo.webp', '/textures/gallery/htmllogo.webp', '/textures/gallery/netlifylogo.webp']
+        url: null,
+        githubUrl: null,
+        description: 'Crop procurement platform built for SIH26032 (Ministry of Consumer Affairs, Food & Public Distribution) to solve long farmer waiting times and schedule uncertainty via farmer registration, slot booking, live queue management, alerts, and procurement/payment tracking.',
+        techStack: ['/textures/gallery/reactlogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/htmllogo.webp', '/textures/gallery/csslogo.webp']
     },
     {
-        id: 'bio',
-        title: 'BIO',
+        id: 'smart-access-door',
+        title: 'SMART ACCESS DOOR',
+        subtitle: 'DTI Hardware Prototype • Arduino Mega',
         front: '/textures/gallery/bioprzod.webp',
         painted: '/textures/gallery/bioprzod_painted.webp',
-        url: 'https://tomkingbio.netlify.app',
-        description: 'A fast, modern personal bio page serving as a central hub for my digital footprint. It showcases my latest coding projects, web development services, YouTube videos, and recommended music artists.',
-        techStack: ['/textures/gallery/htmllogo.webp', '/textures/gallery/csslogo.webp', '/textures/gallery/jslogo.webp', '/textures/gallery/netlifylogo.webp']
+        url: null,
+        githubUrl: null,
+        description: 'Energy-efficient 3-stage automated door system using low-power standby, proximity detection, weight confirmation, tactile password auth, and LED/buzzer feedback in a 1:5 tabletop prototype.',
+        techStack: []
+    },
+    {
+        id: 'arduino-circuit-lab',
+        title: 'ARDUINO CIRCUIT LAB',
+        subtitle: 'Tinkercad & Embedded Prototyping',
+        front: '/textures/gallery/timberkittyprzod.webp',
+        painted: '/textures/gallery/timberkittyprzod_painted.webp',
+        url: null,
+        githubUrl: null,
+        description: 'Interactive Arduino Uno circuit builds and simulations integrating ultrasonic sensors, LDRs, SG90 servos, Neopixels, LEDs, and piezo buzzers.',
+        techStack: []
+    },
+    {
+        id: 'neural-networks-deep-learning',
+        title: 'NEURAL NETWORKS & DEEP LEARNING',
+        subtitle: 'Fundamentals of AI • Group Research',
+        front: '/textures/gallery/youngmultiprzod.webp',
+        painted: '/textures/gallery/youngmultiprzod_painted.webp',
+        url: null,
+        githubUrl: null,
+        description: 'Collaborative 5-member technical research and presentation breaking down neural network architectures, training workflows, and real-world deep learning applications.',
+        techStack: []
     },
 ];
 
@@ -696,11 +727,14 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
     const detailsGroupRef = useRef(); // Ref for the project details on the back
     const techStackGroupRef = useRef(); // Ref for the tech stack section on the back
     const detailsTextRef1 = useRef();
+    const detailsSubtitleRef = useRef();
     const detailsTextRef2 = useRef();
     const techTextRef = useRef();
     const openTextRef = useRef();
+    const githubTextRef = useRef();
     const [hovered, setHovered] = useState(false);
     const [btnHovered, setBtnHovered] = useState(false);
+    const [githubHovered, setGithubHovered] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);  // True ONLY during flip animation
     const [isScrolling, setIsScrolling] = useState(false);  // True during scroll phase
 
@@ -932,7 +966,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
 
     // Cursor change on hover
     useEffect(() => {
-        if (btnHovered && isSelected) {
+        if (((btnHovered && Boolean(project.url)) || (githubHovered && Boolean(project.githubUrl))) && isSelected) {
             document.body.style.cursor = 'pointer';
         } else if (hovered && !isSelected) {
             document.body.style.cursor = 'pointer';
@@ -940,7 +974,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
             document.body.style.cursor = 'auto';
         }
         return () => { document.body.style.cursor = 'auto'; };
-    }, [hovered, isSelected, btnHovered]);
+    }, [hovered, isSelected, btnHovered, githubHovered, project.url, project.githubUrl]);
 
     useFrame((state) => {
         if (!cardRef.current) return;
@@ -964,9 +998,11 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                 };
                 applyOpacity(textRef);
                 applyOpacity(detailsTextRef1);
+                applyOpacity(detailsSubtitleRef);
                 applyOpacity(detailsTextRef2);
                 applyOpacity(techTextRef);
                 applyOpacity(openTextRef);
+                applyOpacity(githubTextRef);
             }
         }
 
@@ -1147,56 +1183,101 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                     ref={buttonGroupRef}
                     position={[0, 0.75, 0]}
                     rotation={[Math.PI, 0, 0]}
+                    visible={Boolean(project.url || project.githubUrl)}
                 >
-                    {/* Warstwa 1: Wizualna ramka przycisku (bez eventów) */}
-                    <mesh>
-                        <planeGeometry args={[1.2, 1.2 / 3.613]} />
-                        <meshBasicMaterial color="#ffffff"
-                            map={project.buttonTexture}
-                            transparent={true}
-                            alphaTest={0.05}
-                        />
-                    </mesh>
+                    {project.url && (
+                        <>
+                            {/* Warstwa 1: Wizualna ramka przycisku (bez eventów) */}
+                            <mesh>
+                                <planeGeometry args={[1.2, 1.2 / 3.613]} />
+                                <meshBasicMaterial color="#ffffff"
+                                    map={project.buttonTexture}
+                                    transparent={true}
+                                    alphaTest={0.05}
+                                />
+                            </mesh>
 
-                    {/* Warstwa 2: Napis OPEN PROJECT (bez eventów) */}
-                    <Text
-                        ref={openTextRef}
-                        position={[0, 0, 0.01]}
-                        fontSize={0.11}
-                        color={btnHovered ? "#333333" : "#1c1c1c"}
-                        font="/fonts/CabinSketch-Bold.ttf"
-                        anchorX="center"
-                        anchorY="middle"
-                        fillOpacity={0} // Start hidden
-                    >
-                        OPEN PROJECT
-                    </Text>
+                            {/* Warstwa 2: Napis OPEN PROJECT (bez eventów) */}
+                            <Text
+                                ref={openTextRef}
+                                position={[0, 0, 0.01]}
+                                fontSize={0.11}
+                                color={btnHovered ? "#333333" : "#1c1c1c"}
+                                font="/fonts/CabinSketch-Bold.ttf"
+                                anchorX="center"
+                                anchorY="middle"
+                                fillOpacity={0} // Start hidden
+                            >
+                                OPEN PROJECT
+                            </Text>
 
-                    {/* Warstwa 3: Niewidoczny hit-area pokrywający cały przycisk - łapie WSZYSTKIE eventy */}
-                    <mesh
-                        position={[0, 0, 0.02]}
-                        onClick={(e) => {
-                            if (isSelected && !isTransitioning) {
-                                e.stopPropagation();
-                                window.open(project.url, '_blank');
-                            }
-                        }}
-                        onPointerEnter={(e) => {
-                            if (isSelected && !isTransitioning) {
-                                e.stopPropagation();
-                                setBtnHovered(true);
-                            }
-                        }}
-                        onPointerLeave={(e) => {
-                            if (isSelected && !isTransitioning) {
-                                e.stopPropagation();
-                            }
-                            setBtnHovered(false);
-                        }}
-                    >
-                        <planeGeometry args={[1.2, 1.2 / 3.613]} />
-                        <meshBasicMaterial color="#e0e0e0" transparent={true} opacity={0} />
-                    </mesh>
+                            {/* Warstwa 3: Niewidoczny hit-area pokrywający cały przycisk - łapie WSZYSTKIE eventy */}
+                            <mesh
+                                position={[0, 0, 0.02]}
+                                onClick={(e) => {
+                                    if (project.url && isSelected && !isTransitioning) {
+                                        e.stopPropagation();
+                                        window.open(project.url, '_blank');
+                                    }
+                                }}
+                                onPointerEnter={(e) => {
+                                    if (project.url && isSelected && !isTransitioning) {
+                                        e.stopPropagation();
+                                        setBtnHovered(true);
+                                    }
+                                }}
+                                onPointerLeave={(e) => {
+                                    if (isSelected && !isTransitioning) {
+                                        e.stopPropagation();
+                                    }
+                                    setBtnHovered(false);
+                                }}
+                            >
+                                <planeGeometry args={[1.2, 1.2 / 3.613]} />
+                                <meshBasicMaterial color="#e0e0e0" transparent={true} opacity={0} />
+                            </mesh>
+                        </>
+                    )}
+
+                    {project.githubUrl && (
+                        <group position={[0, 0.21, 0.02]}>
+                            <Text
+                                ref={githubTextRef}
+                                fontSize={0.07}
+                                color={githubHovered ? "#000000" : "#444444"}
+                                font="/fonts/CabinSketch-Bold.ttf"
+                                anchorX="center"
+                                anchorY="middle"
+                                fillOpacity={0}
+                            >
+                                GITHUB REPO ↗
+                            </Text>
+                            <mesh
+                                position={[0, 0, 0.01]}
+                                onClick={(e) => {
+                                    if (project.githubUrl && isSelected && !isTransitioning) {
+                                        e.stopPropagation();
+                                        window.open(project.githubUrl, '_blank');
+                                    }
+                                }}
+                                onPointerEnter={(e) => {
+                                    if (project.githubUrl && isSelected && !isTransitioning) {
+                                        e.stopPropagation();
+                                        setGithubHovered(true);
+                                    }
+                                }}
+                                onPointerLeave={(e) => {
+                                    if (isSelected && !isTransitioning) {
+                                        e.stopPropagation();
+                                    }
+                                    setGithubHovered(false);
+                                }}
+                            >
+                                <planeGeometry args={[0.9, 0.14]} />
+                                <meshBasicMaterial color="#e0e0e0" transparent={true} opacity={0} />
+                            </mesh>
+                        </group>
+                    )}
                 </group>
 
                 {/* === TEKST NA PLECACH KARTKI (PROJECT DETAILS) === */}
@@ -1207,7 +1288,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                 >
                     <Text
                         ref={detailsTextRef1}
-                        position={[0, 0.28, 0.01]} // Względem środka detailsGroupRef, wyżej
+                        position={[0, 0.30, 0.01]} // Względem środka detailsGroupRef, wyżej
                         fontSize={0.10}
                         color="#1c1c1c"
                         font="/fonts/CabinSketch-Bold.ttf"
@@ -1218,20 +1299,37 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                         PROJECT DETAILS:
                     </Text>
 
+                    {project.subtitle && (
+                        <Text
+                            ref={detailsSubtitleRef}
+                            position={[0, 0.21, 0.01]}
+                            fontSize={0.052}
+                            color="#555555"
+                            font="/fonts/CabinSketch-Bold.ttf"
+                            anchorX="center"
+                            anchorY="middle"
+                            maxWidth={1.2}
+                            textAlign="center"
+                            fillOpacity={0}
+                        >
+                            {project.subtitle}
+                        </Text>
+                    )}
+
                     <Text
                         ref={detailsTextRef2}
-                        position={[0, 0.2, 0.01]} // Poniżej nagłówka
-                        fontSize={0.06}
+                        position={[0, project.subtitle ? 0.13 : 0.2, 0.01]} // Poniżej nagłówka
+                        fontSize={0.052}
                         color="#333333"
                         font="/fonts/CabinSketch-Bold.ttf"
                         anchorX="center"
                         anchorY="top"
-                        maxWidth={1.1} // Maksymalna szerokość zanim zacznie łamać linie
-                        lineHeight={1.4}
+                        maxWidth={1.15} // Maksymalna szerokość zanim zacznie łamać linie
+                        lineHeight={1.32}
                         textAlign="center"
                         fillOpacity={0} // Start hidden
                     >
-                        {project.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco."}
+                        {project.description || "Project details coming soon."}
                     </Text>
                 </group>
 
@@ -1240,6 +1338,7 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                     ref={techStackGroupRef}
                     position={[0, 0.30, 0]} // Pomiędzy Project Details a przyciskiem Open Project
                     rotation={[Math.PI, 0, 0]}
+                    visible={Boolean(project.techStack && project.techStack.length > 0)}
                 >
                     <Text
                         ref={techTextRef}
@@ -1285,7 +1384,9 @@ const ProjectCard = memo(forwardRef(({ index, project, clothespinTexture, curren
                 <Text
                     ref={textRef}
                     position={[0, 0.7, 0]} // Tylko dwa pierwsze parametry [X, Y] mają tutaj znaczenie
-                    fontSize={0.20}
+                    fontSize={project.title.length > 18 ? 0.13 : 0.18}
+                    maxWidth={1.32}
+                    textAlign="center"
                     color="#1c1c1c"
                     font="/fonts/CabinSketch-Bold.ttf"
                     anchorX="center"

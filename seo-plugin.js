@@ -7,64 +7,64 @@ const LOCAL_GLOBAL_INFO = {
     siteTitle: 'Amit Kumar Yadav (AMIT) | Creative 3D Portfolio',
     siteDescription: 'Computer Science (AI & ML) student building interactive web applications, AI tools, and embedded hardware prototypes.',
     aboutMe: 'Amit Kumar Yadav (AMIT) — Gandhinagar, Gujarat. B.Tech CSE (AI/ML) student at Karnavati University (UIT, 2026–2030, 1st Sem) and DAV Public School alumnus (Class XII: 86%, Class X: 92%), building practical, user-focused software & embedded technology solutions with C, Arduino (Mega/Uno), Tinkercad, and prototyping.',
+    email: 'amitkumaryadav4444s@gmail.com',
     githubUrl: 'https://github.com/A-gent-47',
-    linkedinUrl: 'https://www.linkedin.com/in/amit-yadav-990768447/',
+    linkedinUrl: 'https://www.linkedin.com/in/amit-yadav-990768447',
     instagramUrl: 'https://www.instagram.com/amit_kumar_yadav444/',
 };
 
 const LOCAL_PROJECTS = [
     {
-        title: 'MONETUNE',
-        url: 'https://monetune.pl',
-        description: 'MoneTune is a step-by-step blueprint that teaches beginners how to generate passive income using AI-created music. Without any musical skills, you will learn how to easily produce professional tracks, publish them on platforms like Spotify, and monetize your digital assets.',
-        techStack: ['wordpresslogo.webp', 'elementorlogo.webp', 'phplogo.webp', 'csslogo.webp'],
+        title: 'KNIGHTFALL',
+        subtitle: 'Chess Platform • Live Web App',
+        url: 'https://knightfall-chess-zeta.vercel.app/',
+        githubUrl: 'https://github.com/A-gent-47/knightfall-chess',
+        description: 'Interactive chess platform featuring a built-in tactical puzzle library, multi-difficulty bots with distinct personalities and playstyles, move-by-move mistake analysis, and custom themes.',
+        techStack: ['reactlogo.webp', 'jslogo.webp', 'tailwindlogo.webp', 'csslogo.webp'],
     },
     {
-        title: 'TIMBERKITTY',
-        url: 'https://timberkitty.netlify.app',
-        description: 'TimberKitty is an addictive, free-to-play browser arcade game built in pure JavaScript. Players control a lumberjack cat to chop wood, save birds, complete daily missions, and compete on global leaderboards.',
-        techStack: ['jslogo.webp', 'htmllogo.webp', 'csslogo.webp', 'firebaselogo.webp'],
+        title: 'SYNTHWAVE',
+        subtitle: 'Immersive Music Visualizer • Live Web App',
+        url: 'https://synthwave-pied.vercel.app/',
+        githubUrl: 'https://github.com/A-gent-47/SYNTHWAVE-',
+        description: 'Interactive audio-reactive music visualizer delivering an immersive synthwave visual experience directly in the browser.',
+        techStack: ['jslogo.webp', 'htmllogo.webp', 'csslogo.webp'],
     },
     {
-        title: 'YOUNG MULTI',
-        url: 'https://young-multi-strona.netlify.app',
-        description: 'A sleek, modern concept website dedicated to the Polish rapper and creator Young Multi. It serves as a promotional landing page designed to highlight his personal brand, music, and online presence.',
-        techStack: ['reactlogo.webp', 'tailwindlogo.webp', 'htmllogo.webp', 'netlifylogo.webp'],
+        title: 'KISANSETU (SIH 2026)',
+        subtitle: 'Smart India Hackathon • SIH26032',
+        url: null,
+        githubUrl: null,
+        description: 'Crop procurement platform built for SIH26032 (Ministry of Consumer Affairs, Food & Public Distribution) to solve long farmer waiting times and schedule uncertainty via farmer registration, slot booking, live queue management, alerts, and procurement/payment tracking.',
+        techStack: ['reactlogo.webp', 'jslogo.webp', 'htmllogo.webp', 'csslogo.webp'],
     },
     {
-        title: 'BIO',
-        url: 'https://tomkingbio.netlify.app',
-        description: 'A fast, modern personal bio page serving as a central hub for my digital footprint. It showcases my latest coding projects, web development services, YouTube videos, and recommended music artists.',
-        techStack: ['htmllogo.webp', 'csslogo.webp', 'jslogo.webp', 'netlifylogo.webp'],
+        title: 'SMART ACCESS DOOR',
+        subtitle: 'DTI Hardware Prototype • Arduino Mega',
+        url: null,
+        githubUrl: null,
+        description: 'Energy-efficient 3-stage automated door system using low-power standby, proximity detection, weight confirmation, tactile password auth, and LED/buzzer feedback in a 1:5 tabletop prototype.',
+        techStack: [],
+    },
+    {
+        title: 'ARDUINO CIRCUIT LAB',
+        subtitle: 'Tinkercad & Embedded Prototyping',
+        url: null,
+        githubUrl: null,
+        description: 'Interactive Arduino Uno circuit builds and simulations integrating ultrasonic sensors, LDRs, SG90 servos, Neopixels, LEDs, and piezo buzzers.',
+        techStack: [],
+    },
+    {
+        title: 'NEURAL NETWORKS & DEEP LEARNING',
+        subtitle: 'Fundamentals of AI • Group Research',
+        url: null,
+        githubUrl: null,
+        description: 'Collaborative 5-member technical research and presentation breaking down neural network architectures, training workflows, and real-world deep learning applications.',
+        techStack: [],
     },
 ];
 
-const LOCAL_AWARDS = [
-    {
-        title: 'SOTD - GSAP',
-        category: 'sotd',
-        date: '2026-02-13',
-        url: 'https://www.linkedin.com/posts/greensock_site-of-the-day-young-multi-this-immersive-activity-7427567524940017664-zU2n',
-    },
-    {
-        title: 'SOTD - CSS Winner',
-        category: 'sotd',
-        date: '2026-01-24',
-        url: 'https://www.csswinner.com/details/young-multi-official-experience/19045',
-    },
-    {
-        title: 'SOTD - Orpetron',
-        category: 'sotd',
-        date: '2026-01-29',
-        url: 'https://orpetron.com/sites/young-multi/',
-    },
-    {
-        title: 'SOTD - Design Nominess',
-        category: 'sotd',
-        date: '2026-02-17',
-        url: 'https://www.designnominees.com/sites/young-multi',
-    },
-];
+const LOCAL_AWARDS = [];
 
 const LOCAL_FAQ = [];
 
@@ -121,6 +121,7 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
         name: 'Amit Kumar Yadav',
         alternateName: ['AMIT'],
         url: SITE_URL,
+        ...(globalInfo?.email ? { email: globalInfo.email } : {}),
         jobTitle: 'B.Tech CSE (AI & ML) Student & Developer',
         description: globalInfo?.aboutMe || 'Computer Science (AI & ML) student building interactive web applications, AI tools, and embedded hardware prototypes.',
         knowsAbout: ['C', 'Arduino (Mega/Uno)', 'Tinkercad', 'Prototyping', 'Artificial Intelligence', 'Machine Learning', 'React', 'Three.js', 'Web Development'],
@@ -188,10 +189,11 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
                     '@type': 'CreativeWork',
                     name: p.seoTitle || p.title,
                     description: p.seoDescription || p.description || '',
-                    url: p.url || undefined,
+                    ...(p.url ? { url: p.url } : {}),
+                    ...(p.githubUrl ? { sameAs: p.githubUrl } : {}),
                     creator: { '@id': `${SITE_URL}/#person` },
                     ...(p.techStack && p.techStack.length > 0 ? {
-                        keywords: p.techStack.map(t => TECH_STACK_NAMES[t] || t).join(', ')
+                        keywords: p.techStack.map(t => TECH_STACK_NAMES[t.split('/').pop()] || t).join(', ')
                     } : {}),
                 }
             }))
@@ -205,10 +207,11 @@ function buildJsonLd(globalInfo, projects, studio, awards, faqList) {
                 '@id': `${SITE_URL}/#project-${projectSlug}`,
                 name: p.seoTitle || p.title,
                 description: p.seoDescription || p.description || '',
-                url: p.url || undefined,
+                ...(p.url ? { url: p.url } : {}),
+                ...(p.githubUrl ? { sameAs: p.githubUrl } : {}),
                 creator: { '@id': `${SITE_URL}/#person` },
                 ...(p.techStack && p.techStack.length > 0 ? {
-                    keywords: p.techStack.map(t => TECH_STACK_NAMES[t] || t).join(', ')
+                    keywords: p.techStack.map(t => TECH_STACK_NAMES[t.split('/').pop()] || t).join(', ')
                 } : {}),
             });
         });
@@ -336,14 +339,28 @@ function buildLlmsTxt(globalInfo, projects, studio, awards, faqList) {
     content += `## Biography / About Me\n`;
     content += `${aboutMe}\n\n`;
 
+    content += `## Contact\n`;
+    if (globalInfo?.email) content += `- Email: ${globalInfo.email}\n`;
+    if (globalInfo?.githubUrl) content += `- GitHub: ${globalInfo.githubUrl}\n`;
+    if (globalInfo?.linkedinUrl) content += `- LinkedIn: ${globalInfo.linkedinUrl}\n`;
+    if (globalInfo?.instagramUrl) content += `- Instagram: ${globalInfo.instagramUrl}\n`;
+    content += `\n`;
+
     content += `## Core Technologies & Skills\n`;
     content += `- C, Arduino (Mega/Uno), Tinkercad, Prototyping, AI & ML, React, Three.js, React Three Fiber (R3F), GSAP, WebGL.\n\n`;
 
     if (projects && projects.length > 0) {
         content += `## Selected Portfolio Projects\n`;
         projects.forEach(p => {
-            const tech = p.techStack ? ` (Tech: ${p.techStack.map(t => TECH_STACK_NAMES[t] || t).join(', ')})` : '';
-            content += `- [${p.seoTitle || p.title}](${p.url || SITE_URL}): ${p.seoDescription || p.description || ''}${tech}\n`;
+            const tech = p.techStack && p.techStack.length > 0
+                ? ` (Tech: ${p.techStack.map(t => TECH_STACK_NAMES[t.split('/').pop()] || t).join(', ')})`
+                : '';
+            const links = [
+                p.url ? `Live: ${p.url}` : null,
+                p.githubUrl ? `GitHub: ${p.githubUrl}` : null,
+            ].filter(Boolean).join(' | ');
+            const linkSuffix = links ? ` (${links})` : '';
+            content += `- **${p.seoTitle || p.title}**${p.subtitle ? ` (${p.subtitle})` : ''}: ${p.seoDescription || p.description || ''}${tech}${linkSuffix}\n`;
         });
         content += `\n`;
     }
@@ -429,6 +446,7 @@ export function generateSeoHtml() {
                 seoHtml += `  <section id="about">\n`;
                 seoHtml += `    <h2>About Me</h2>\n`;
                 seoHtml += `    <p>${aboutMe}</p>\n`;
+                if (globalInfo?.email) seoHtml += `    <a href="mailto:${globalInfo.email}">${globalInfo.email}</a>\n`;
                 if (globalInfo?.githubUrl) seoHtml += `    <a href="${globalInfo.githubUrl}">GitHub</a>\n`;
                 if (globalInfo?.linkedinUrl) seoHtml += `    <a href="${globalInfo.linkedinUrl}">LinkedIn</a>\n`;
                 seoHtml += `  </section>\n`;
@@ -436,7 +454,7 @@ export function generateSeoHtml() {
                 if (projects && projects.length > 0) {
                     seoHtml += `  <section id="projects">\n    <h2>Projects</h2>\n    <ul>\n`;
                     projects.forEach(p => {
-                        seoHtml += `      <li>\n        <h3>${p.seoTitle || p.title}</h3>\n        <p>${p.seoDescription || p.description || ''}</p>\n        ${p.url ? `<a href="${p.url}">Visit ${p.seoTitle || p.title}</a>\n` : ''}      </li>\n`;
+                        seoHtml += `      <li>\n        <h3>${p.seoTitle || p.title}${p.subtitle ? ` — ${p.subtitle}` : ''}</h3>\n        <p>${p.seoDescription || p.description || ''}</p>\n        ${p.url ? `<a href="${p.url}">Visit ${p.seoTitle || p.title}</a>\n` : ''}${p.githubUrl ? `        <a href="${p.githubUrl}">GitHub</a>\n` : ''}      </li>\n`;
                     });
                     seoHtml += `    </ul>\n  </section>\n`;
                 }
