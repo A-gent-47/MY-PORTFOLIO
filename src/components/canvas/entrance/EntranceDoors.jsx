@@ -7,6 +7,7 @@ import '../shaders/RevealMaterial'; // Registers alpha-discard reveal shader
 import { playBackgroundMusic } from '../../../utils/audioManager';
 import { useAchievements } from '../../../context/AchievementsContext';
 import { isTouchDevice } from '../../../utils/deviceDetect';
+import EntranceBugs from './EntranceBugs';
 
 // Use same font as App.jsx preload (Inter) - works reliably
 const FONT_URL = 'https://fonts.gstatic.com/s/inter/v12/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hjp-Ek-_EeA.woff';
@@ -79,24 +80,14 @@ const EntranceDoors = ({
     const treeTexture = useTexture('/textures/entrance/tree_sketch.webp');
     const mouseTexture = useTexture('/textures/entrance/mouse_hanging.webp');
     const potTexture = useTexture('/textures/entrance/pot_with_duck.webp');
-    const bugTexture = useTexture('/textures/entrance/bug_sketch.webp');
-    const inkSplashTexture = useTexture('/images/ink-splash.webp');
     const speechBubbleTexture = useTexture('/textures/entrance/speech_bubble.webp');
 
     // Cat Ref
     const leftPupilRef = useRef();
     const rightPupilRef = useRef();
     const catGroupRef = useRef(); // To get world position for tracking
-    const bugRef = useRef();
 
-    // Bug Click Animation State
-    const [isBugClicked, setIsBugClicked] = useState(false);
-    const [textVisible, setTextVisible] = useState(false);
-    const [clipProgress, setClipProgress] = useState(0); // 0-1 for pencil drawing reveal
-    const inkSplashRef = useRef();
     const handleHideDelayRef = useRef(); // Track pending gsap.delayedCall for handle visibility
-    const bugFixedTextRef = useRef();
-    const bugClickPos = useRef({ x: 0, y: 0 }); // Store click position
 
     // Duck Speech Bubble State (Rubber Duck Debugging)
     const [isDuckSpeaking, setIsDuckSpeaking] = useState(false);
@@ -116,71 +107,6 @@ const EntranceDoors = ({
         "Is it plugged in?",
         "Works in production! 🚀",
     ];
-
-    // Bug Click Handler
-    const handleBugClick = (e) => {
-        e.stopPropagation();
-        if (isBugClicked) return; // Already clicked
-
-        // Store bug position at click time
-        if (bugRef.current) {
-            bugClickPos.current = {
-                x: bugRef.current.position.x,
-                y: bugRef.current.position.y
-            };
-        }
-
-        setIsBugClicked(true);
-        document.body.style.cursor = "auto";
-
-        // Animate ink splash scale up
-        if (inkSplashRef.current) {
-            // Position ink splash at bug's last position
-            inkSplashRef.current.position.x = bugClickPos.current.x;
-            inkSplashRef.current.position.y = bugClickPos.current.y;
-            inkSplashRef.current.scale.set(0, 0, 0);
-            inkSplashRef.current.material.opacity = 1;
-
-            gsap.to(inkSplashRef.current.scale, {
-                x: 0.8,
-                y: 0.8,
-                z: 1,
-                duration: 0.4,
-                ease: 'back.out(1.7)'
-            });
-        }
-
-        // Pencil drawing effect - smooth reveal from left to right
-        setTextVisible(true);
-        setClipProgress(0);
-
-        if (bugFixedTextRef.current) {
-            bugFixedTextRef.current.position.x = bugClickPos.current.x;
-            bugFixedTextRef.current.position.y = bugClickPos.current.y;
-        }
-
-        // Animate clip progress from 0 to 1 (reveals text like pencil drawing)
-        gsap.to({ progress: 0 }, {
-            progress: 1,
-            duration: 0.8,
-            ease: 'power1.inOut',
-            onUpdate: function () {
-                setClipProgress(this.targets()[0].progress);
-            },
-            onComplete: () => {
-                // Fade out after a delay
-                setTimeout(() => {
-                    if (inkSplashRef.current) {
-                        gsap.to(inkSplashRef.current.material, {
-                            opacity: 0,
-                            duration: 1,
-                            ease: 'power2.out'
-                        });
-                    }
-                }, 1500);
-            }
-        });
-    };
 
     // Duck Click Handler (Rubber Duck Debugging)
     const handleDuckClick = (e) => {
@@ -496,23 +422,6 @@ const EntranceDoors = ({
             // Amplitude: 0.05 radians (approx 3 degrees)
             // Speed: 1.5
             mousePivotRef.current.rotation.x = Math.sin(clock.elapsedTime * 1.5) * 0.05;
-        }
-
-        // --- Bug Animation ---
-        if (bugRef.current) {
-            const time = clock.elapsedTime;
-            // Wandering logic: slightly complex sine waves for "random" walking felt
-            // Initial Pos: [2.5, floorY + 3.0, 0.16] (Above window)
-            // Range: +/- 0.3 in X, +/- 0.3 in Y
-
-            const xOffset = Math.sin(time * 0.8) * 0.3 + Math.sin(time * 1.5) * 0.1;
-            const yOffset = Math.cos(time * 0.6) * 0.2 + Math.cos(time * 1.1) * 0.1;
-
-            bugRef.current.position.x = 3 + xOffset;
-            bugRef.current.position.y = (floorY + 3.8) + yOffset;
-
-            // Random rotation jitter
-            bugRef.current.rotation.z = Math.sin(time * 5) * 0.1 + Math.atan2(yOffset, xOffset) * 0.2;
         }
     });
 
@@ -892,56 +801,8 @@ const EntranceDoors = ({
                 </group>
             </group>
 
-            {/* ANIMATED BUG (Right Side - Above Window) */}
-            {!isBugClicked && (
-                <mesh
-                    ref={bugRef}
-                    position={[2.5, floorY + 2.8, 0.16]}
-                    onClick={handleBugClick}
-                    onPointerEnter={() => { document.body.style.cursor = "pointer"; }}
-                    onPointerLeave={() => { document.body.style.cursor = "auto"; }}
-                >
-                    <planeGeometry args={[0.4, 0.4]} />
-                    <meshBasicMaterial color="#e0e0e0"
-                        map={bugTexture}
-                        transparent={true}
-                        alphaTest={0.01}
-                        depthWrite={false}
-                    />
-                </mesh>
-            )}
-
-            {/* INK SPLASH - always mounted to preload texture/shader */}
-            <mesh
-                ref={inkSplashRef}
-                position={[2.5, floorY + 2.8, 0.17]}
-                scale={[0, 0, 0]}
-            // Removed conditional 'visible' to ensure GPU upload
-            >
-                <planeGeometry args={[2, 2]} />
-                <meshBasicMaterial color="#e0e0e0"
-                    map={inkSplashTexture}
-                    transparent={true}
-                    alphaTest={0.01}
-                    depthWrite={false}
-                />
-            </mesh>
-
-            {/* BUG FIXED! Text - always mounted to preload font */}
-            <Text
-                ref={bugFixedTextRef}
-                position={[2.5, floorY + 2.8, 0.35]} // Default pos, updated on click
-                fontSize={0.25} // Increased size slightly for CabinSketch
-                color="#1a1a1a"
-                anchorX="center"
-                anchorY="middle"
-                font="/fonts/CabinSketch-Bold.ttf"
-                outlineWidth={0.015}
-                outlineColor="#ffffff"
-                clipRect={[-1, -0.5, -1 + (clipProgress * 2.5), 0.5]}
-            >
-                BUG FIXED!
-            </Text>
+            {/* ANIMATED WALL BUGS (4 independent crawling + respawnable bugs) */}
+            <EntranceBugs floorY={floorY} />
 
 
 
