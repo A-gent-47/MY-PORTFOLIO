@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
-import { sanityClient, urlFor, getProxyUrl } from '../config/sanity';
+import { sanityClient, isSanityConfigured, urlFor, getProxyUrl } from '../config/sanity';
 import { useTexture } from '@react-three/drei';
 import { useLoader } from '@react-three/fiber';
 import { TextureLoader } from 'three';
 
-// Flaga bezpieczeństwa: Jeśli użytkownik nie wpisał jeszcze Project ID, 
-// hooki zwrócą null, co pozwoli na załadowanie danych hardcodowanych (fallback).
-export const isSanityConfigured = sanityClient.config().projectId !== 'YOUR_PROJECT_ID';
+// Re-export safety flag: when false, hooks return null so components use local fallback data.
+export { isSanityConfigured };
 
 // Globalny cache dla danych z Sanity
 const cache = {
@@ -41,7 +40,7 @@ const preloadBrowserImage = (path) => {
 const supportsHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
 
 export function loadSanityData() {
-    if (!isSanityConfigured) {
+    if (!isSanityConfigured || !sanityClient) {
         cache.loaded = true;
         return Promise.resolve(cache);
     }
@@ -221,14 +220,19 @@ export function loadSanityData() {
 }
 
 export function isSanityDataLoaded() {
-    if (!isSanityConfigured) return true;
+    if (!isSanityConfigured || !sanityClient) return true;
     return cache.loaded;
 }
 
 export function useGalleryProjects() {
-    const [projects, setProjects] = useState(cache.projects);
+    const [projects, setProjects] = useState(() => (isSanityConfigured ? cache.projects : null));
 
     useEffect(() => {
+        if (!isSanityConfigured || !sanityClient) {
+            setProjects(null);
+            return;
+        }
+
         loadSanityData();
 
         if (cache.loaded) {
@@ -247,9 +251,14 @@ export function useGalleryProjects() {
 }
 
 export function useStudioContent() {
-    const [content, setContent] = useState(cache.content);
+    const [content, setContent] = useState(() => (isSanityConfigured ? cache.content : null));
 
     useEffect(() => {
+        if (!isSanityConfigured || !sanityClient) {
+            setContent(null);
+            return;
+        }
+
         loadSanityData();
 
         if (cache.loaded) {
@@ -268,9 +277,14 @@ export function useStudioContent() {
 }
 
 export function useAwards() {
-    const [awardsData, setAwardsData] = useState(cache.awards);
+    const [awardsData, setAwardsData] = useState(() => (isSanityConfigured ? cache.awards : null));
 
     useEffect(() => {
+        if (!isSanityConfigured || !sanityClient) {
+            setAwardsData(null);
+            return;
+        }
+
         loadSanityData();
 
         if (cache.loaded) {

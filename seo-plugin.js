@@ -1,11 +1,87 @@
-import { createClient } from '@sanity/client';
+import { CONTENT_DATA } from './src/components/canvas/rooms/Studio/contentData.js';
 
-const sanityClient = createClient({
-    projectId: 'kv5wjjmj',
-    dataset: 'production',
-    useCdn: true,
-    apiVersion: '2024-03-01',
-});
+// Local fallback SEO/GEO data — bypasses Sanity CMS fetches so builds work 100% offline
+const LOCAL_GLOBAL_INFO = {
+    siteTitle: 'Tomasz "ITom" Szmajda | Creative 3D Portfolio',
+    siteDescription: "Interactive 3D developer portfolio by Tomasz 'ITom' Szmajda. Explore WebGL experiments, React projects & GSAP animations in a hand-drawn gallery.",
+    aboutMe: 'My name is Tomasz Szmajda (ITom), and I am a dedicated Frontend Developer specializing in interactive 3D web experiences with React, Three.js, React Three Fiber, and GSAP.',
+    githubUrl: 'https://github.com/ITomPoland',
+    linkedinUrl: 'https://www.linkedin.com/in/tomasz-szmajda-259337305/',
+    instagramUrl: 'https://www.instagram.com/itom.dev/',
+    xUrl: 'https://x.com/ITom_Dev',
+    youtubeUrl: 'https://www.youtube.com/@itompoland',
+};
+
+const LOCAL_PROJECTS = [
+    {
+        title: 'MONETUNE',
+        url: 'https://monetune.pl',
+        description: 'MoneTune is a step-by-step blueprint that teaches beginners how to generate passive income using AI-created music. Without any musical skills, you will learn how to easily produce professional tracks, publish them on platforms like Spotify, and monetize your digital assets.',
+        techStack: ['wordpresslogo.webp', 'elementorlogo.webp', 'phplogo.webp', 'csslogo.webp'],
+    },
+    {
+        title: 'TIMBERKITTY',
+        url: 'https://timberkitty.netlify.app',
+        description: 'TimberKitty is an addictive, free-to-play browser arcade game built in pure JavaScript. Players control a lumberjack cat to chop wood, save birds, complete daily missions, and compete on global leaderboards.',
+        techStack: ['jslogo.webp', 'htmllogo.webp', 'csslogo.webp', 'firebaselogo.webp'],
+    },
+    {
+        title: 'YOUNG MULTI',
+        url: 'https://young-multi-strona.netlify.app',
+        description: 'A sleek, modern concept website dedicated to the Polish rapper and creator Young Multi. It serves as a promotional landing page designed to highlight his personal brand, music, and online presence.',
+        techStack: ['reactlogo.webp', 'tailwindlogo.webp', 'htmllogo.webp', 'netlifylogo.webp'],
+    },
+    {
+        title: 'BIO',
+        url: 'https://tomkingbio.netlify.app',
+        description: 'A fast, modern personal bio page serving as a central hub for my digital footprint. It showcases my latest coding projects, web development services, YouTube videos, and recommended music artists.',
+        techStack: ['htmllogo.webp', 'csslogo.webp', 'jslogo.webp', 'netlifylogo.webp'],
+    },
+];
+
+const LOCAL_AWARDS = [
+    {
+        title: 'SOTD - GSAP',
+        category: 'sotd',
+        date: '2026-02-13',
+        url: 'https://www.linkedin.com/posts/greensock_site-of-the-day-young-multi-this-immersive-activity-7427567524940017664-zU2n',
+    },
+    {
+        title: 'SOTD - CSS Winner',
+        category: 'sotd',
+        date: '2026-01-24',
+        url: 'https://www.csswinner.com/details/young-multi-official-experience/19045',
+    },
+    {
+        title: 'SOTD - Orpetron',
+        category: 'sotd',
+        date: '2026-01-29',
+        url: 'https://orpetron.com/sites/young-multi/',
+    },
+    {
+        title: 'SOTD - Design Nominess',
+        category: 'sotd',
+        date: '2026-02-17',
+        url: 'https://www.designnominees.com/sites/young-multi',
+    },
+];
+
+const LOCAL_FAQ = [];
+
+function getLocalSeoData() {
+    const studio = CONTENT_DATA.map(item => ({
+        ...item,
+        thumbnailUrl: item.frontTexture ? `https://itomdev.com${item.frontTexture}` : undefined,
+    }));
+
+    return {
+        globalInfo: LOCAL_GLOBAL_INFO,
+        projects: LOCAL_PROJECTS,
+        studio,
+        awards: LOCAL_AWARDS,
+        faqList: LOCAL_FAQ,
+    };
+}
 
 // Tech stack filename -> human-readable name mapping for JSON-LD
 const TECH_STACK_NAMES = {
@@ -306,19 +382,8 @@ export function generateSeoHtml() {
 
     async function getLlmsContent() {
         if (!cachedLlmsContent) {
-            try {
-                const [globalInfo, projects, studio, awards, faqList] = await Promise.all([
-                    sanityClient.fetch(`*[_id == "globalInfo"][0]`),
-                    sanityClient.fetch(`*[_type == "galleryProject"]`),
-                    sanityClient.fetch(`*[_type == "studioItem"]`),
-                    sanityClient.fetch(`*[_type == "awardCertificate"]`),
-                    sanityClient.fetch(`*[_type == "faq"]`)
-                ]);
-                cachedLlmsContent = buildLlmsTxt(globalInfo, projects, studio, awards, faqList);
-            } catch (e) {
-                console.error('SEO Plugin Error: Failed to fetch Sanity data for llms.txt', e);
-                cachedLlmsContent = `# Tomasz Szmajda\n> Creative Developer\n`;
-            }
+            const { globalInfo, projects, studio, awards, faqList } = getLocalSeoData();
+            cachedLlmsContent = buildLlmsTxt(globalInfo, projects, studio, awards, faqList);
         }
         return cachedLlmsContent;
     }
@@ -342,19 +407,13 @@ export function generateSeoHtml() {
         // This hook runs when Vite generates or serves index.html
         async transformIndexHtml(html) {
             try {
-                // Fetch all data in parallel
-                const [globalInfo, projects, studio, awards, faqList] = await Promise.all([
-                    sanityClient.fetch(`*[_id == "globalInfo"][0]`),
-                    sanityClient.fetch(`*[_type == "galleryProject"]`),
-                    sanityClient.fetch(`*[_type == "studioItem"] { ..., "thumbnailUrl": frontTexture.asset->url }`),
-                    sanityClient.fetch(`*[_type == "awardCertificate"]`),
-                    sanityClient.fetch(`*[_type == "faq"]`)
-                ]);
+                const { globalInfo, projects, studio, awards, faqList } = getLocalSeoData();
 
                 // Fallback values if globalInfo is not yet created in Sanity
                 const siteTitle = globalInfo?.siteTitle || 'ITom - Creative Developer';
                 const siteDescription = globalInfo?.siteDescription || 'Interactive 3D portfolio of a creative web developer.';
                 const aboutMe = globalInfo?.aboutMe || 'I am a creative developer specializing in 3D web experiences.';
+                const escapeAttr = (val) => String(val).replace(/"/g, '&quot;');
 
                 // Cache llms.txt content for later bundle emission
                 cachedLlmsContent = buildLlmsTxt(globalInfo, projects, studio, awards, faqList);
@@ -427,13 +486,13 @@ export function generateSeoHtml() {
                 // Add or replace meta description
                 if (transformedHtml.includes('<meta name="description"')) {
                     transformedHtml = transformedHtml.replace(
-                        /<meta name="description" content="(.*?)"\s*\/?>/,
-                        `<meta name="description" content="${siteDescription}" />`
+                        /<meta\s+name="description"[\s\S]*?content="[^"]*"\s*\/?>/i,
+                        `<meta name="description" content="${escapeAttr(siteDescription)}" />`
                     );
                 } else {
                     transformedHtml = transformedHtml.replace(
                         '</head>',
-                        `  <meta name="description" content="${siteDescription}" />\n</head>`
+                        `  <meta name="description" content="${escapeAttr(siteDescription)}" />\n</head>`
                     );
                 }
 
@@ -441,22 +500,22 @@ export function generateSeoHtml() {
                 transformedHtml = transformedHtml
                     .replace(
                         /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/i,
-                        `<meta property="og:title" content="${siteTitle}" />`
+                        `<meta property="og:title" content="${escapeAttr(siteTitle)}" />`
                     )
                     .replace(
-                        /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/i,
-                        `<meta property="og:description" content="${siteDescription}" />`
+                        /<meta\s+property="og:description"[\s\S]*?content="[^"]*"\s*\/?>/i,
+                        `<meta property="og:description" content="${escapeAttr(siteDescription)}" />`
                     );
 
                 // Update Twitter card dynamic metadata
                 transformedHtml = transformedHtml
                     .replace(
                         /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/i,
-                        `<meta name="twitter:title" content="${siteTitle}" />`
+                        `<meta name="twitter:title" content="${escapeAttr(siteTitle)}" />`
                     )
                     .replace(
-                        /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/i,
-                        `<meta name="twitter:description" content="${siteDescription}" />`
+                        /<meta\s+name="twitter:description"[\s\S]*?content="[^"]*"\s*\/?>/i,
+                        `<meta name="twitter:description" content="${escapeAttr(siteDescription)}" />`
                     );
 
                 // Inject dynamic JSON-LD right before </head> (next to the existing static one)
@@ -475,7 +534,7 @@ export function generateSeoHtml() {
 
                 return transformedHtml;
             } catch (error) {
-                console.error('SEO Plugin Error: Failed to fetch Sanity data', error);
+                console.error('SEO Plugin Error: Failed to generate local SEO metadata', error);
                 // Return original HTML on failure so we don't break the build
                 return html;
             }
