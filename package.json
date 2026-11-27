@@ -1,5 +1,12 @@
 {
-  "name": "portfolio-itom",
+  "name": "amit-3d-portfolio",
+  "description": "Interactive 3D hand-drawn developer portfolio built with React, Three.js, React Three Fiber, and GSAP",
+  "author": "Amit Kumar Yadav",
+  "homepage": "https://github.com/A-gent-47/amit-3d-portfolio",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/A-gent-47/amit-3d-portfolio.git"
+  },
   "private": true,
   "version": "0.0.0",
   "type": "module",

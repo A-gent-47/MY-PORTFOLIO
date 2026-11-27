@@ -7,14 +7,17 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+node_modules/
+dist/
+dist-ssr/
 *.local
 
+# Local AI / temp / tooling
+.antigravitycli/
+tmp/
+
 # dotenv environment variables file
-.env
-.env.*
+.env*
 !.env.example
 
 # Editor directories and files

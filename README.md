@@ -1,95 +1,65 @@
-# 🎨 ITom Dev | Interactive 3D WebGL Portfolio
+# Amit Kumar Yadav — Interactive 3D Developer Portfolio
 
-<div align="center">
-  <img src="https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react" alt="React" />
-  <img src="https://img.shields.io/badge/Three.js-0.182-black?style=for-the-badge&logo=threedotjs" alt="Three.js" />
-  <img src="https://img.shields.io/badge/R3F-9.4-purple?style=for-the-badge&logo=react" alt="React Three Fiber" />
-  <img src="https://img.shields.io/badge/GSAP-3.14-green?style=for-the-badge&logo=greensock" alt="GSAP" />
-  <img src="https://img.shields.io/badge/Vite-7.2-646CFF?style=for-the-badge&logo=vite" alt="Vite" />
-</div>
-
-<br/>
-
-Welcome to the open-source repository of **Tomasz "ITom" Szmajda's** interactive 3D Web Developer portfolio. This project pushes the limits of modern web technologies by blending spatial WebGL computing, complex React ecosystems, and highly optimized frontend engineering.
+An interactive 3D hand-drawn developer portfolio built with React, Vite, Three.js, React Three Fiber, GSAP, and custom GLSL reveal shaders. Visitors enter through a sketchy brick facade into an infinite paper corridor connecting four bespoke interactive 3D rooms.
 
 > [!NOTE]
-> Ensure hardware acceleration is enabled in your browser settings to experience the smooth 60 FPS high-tier rendering of this application.
-
-## 🚀 Key Performance Architectures (2026 Standards)
-
-This application is strictly optimized for cross-device operability, achieving zero lag spikes even on mobile processors through several bespoke architectural implementations:
-
-1. **Invisible Semantic SEO Fallback:** Bypasses WebGL canvas SEO limitations via strategic `sr-only-seo` indexing DOM injections, rendering fully visible semantic trees to native search-engine crawlers without mounting heavy bundles.
-2. **Asynchronous Shader Compilation:** Enforces `gl.compileAsync` during the Preloading phase inside a hidden `RoomWarmup` Suspense boundary. This allows Three.js to pre-compile complex materials asynchronously without blocking the main React update thread.
-3. **Baked Global Tinting & Lighing Extraction:** Replaced real-time WebGL shadow maps and infinite light rays with baked-in global textures (`apply_global_tint.js`), dropping the GPU compute overhead entirely while maintaining visual depth.
-4. **DOM Mutation Bypassing:** Critical animation properties (like SVG preloader states tracking 130+ concurrent HTTP texture requests) write directly to the `ref.current.style`, intentionally bypassing React’s `setState` render cycles to conserve CPU.
-5. **Adaptive Device Tiering:** Auto-detects `navigator.deviceMemory`, hardware concurrency, and viewport sizes to scale WebGL resolutions (`dpr`), antialiasing algorithms, and texture loading strictness on the fly.
+> Enable hardware acceleration in your browser for smooth 60 FPS WebGL rendering across desktop and mobile tiers.
 
 ---
 
-## 🏗️ 3D Scene Architecture
+## ✨ Experience Overview
 
-```mermaid
-graph TD;
-    A[App.jsx] --> B[SceneProvider Context];
-    A --> C[canvas];
-    A --> D[2D DOM / SEO / HUD];
-    
-    C --> E[Experience.jsx];
-    E --> F[RoomWarmup Pre-compiler];
-    E --> G[Infinite Corridor Manager];
-    
-    G --> H[Gallery Room];
-    G --> I[Studio Room];
-    G --> J[Contact Room];
-    G --> K[About Room];
-    
-    H -.-> L{useTexture & useGLTF};
-    L -.-> M(GPU Memory);
+- **Interactive Entrance:** Open the central sketch doors to enter the corridor, squash four wandering wall bugs with a sketchy `"BUG FIXED!"` animation, grab and flick the hanging tree-branch computer mouse with damped pendulum physics, or click the rubber duck for debugging wisdom.
+- **Infinite 3D Corridor:** Scroll seamlessly past pencil-sketch murals and inspectable framed illustrations (including custom Synthwave, Arduino/AI circuit, and Knightfall artwork) lined along a hand-drawn sawtooth hallway.
+- **Interactive Rooms:**
+  - **About:** Floating cloud-island journey, education milestones, and skills showcase.
+  - **Gallery:** Flippable 3D showcase cards for key software and hardware builds.
+  - **Studio:** Interactive retro monitor, dual TV screens, and mobile device showcase.
+  - **Contact:** Sketchbook paper view with direct Gmail copy/mail actions and floating interactive social barrels.
+
+---
+
+## 🚀 Featured Projects
+
+- **[Knightfall](https://knightfall-chess-zeta.vercel.app/)** ([GitHub](https://github.com/A-gent-47/knightfall-chess)) — Interactive chess platform featuring tactical puzzles, multi-difficulty bots with distinct playstyles, move-by-move mistake analysis, and custom themes.
+- **[SYNTHWAVE](https://synthwave-pied.vercel.app/)** ([GitHub](https://github.com/A-gent-47/SYNTHWAVE-)) — Interactive audio-reactive browser music visualizer with a retro synthwave aesthetic.
+- **KisanSetu (SIH 2026)** — Crop procurement and logistics platform built for Smart India Hackathon (`SIH26032`) with farmer registration, slot booking, live queue management, alerts, and payment tracking.
+- **Multi-Stage Smart Access & Automated Door System** — Energy-efficient DTI hardware prototype built with Arduino Mega using low-power standby, ultrasonic proximity detection, weight confirmation, and automated actuation.
+
+---
+
+## 🧰 Tech Stack
+
+- **UI & Build:** React 19, Vite, React Router
+- **3D & Motion:** Three.js, React Three Fiber (`@react-three/fiber`, `@react-three/drei`), Postprocessing, GSAP
+- **Shaders & Assets:** Custom GLSL shaders (`RevealMaterial`, `PaintRevealMaterial`), WebP POT texture preloading (`texturePreloadList.js`)
+
+---
+
+## 🛠️ Quick Local Setup
+
+Make sure **Node.js v20+** is installed:
+
+```bash
+npm install
+```
+
+Run the development server:
+
+```bash
+npm run dev
+```
+
+For production verification (recommended for compressed assets & textures):
+
+```bash
+npm run build && npm run preview
 ```
 
 ---
 
-## 🛠️ Local Development Setup
+## 🙌 Credits & Licence
 
-To run this application natively on your local machine:
+Code in this repository is licensed under the [MIT License](LICENSE).
 
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/ITomPoland/portfolio-itom.git
-   cd portfolio-itom
-   ```
-
-2. **Install dependencies:**
-   Make sure you are on Node.js v20+.
-   ```bash
-   npm install
-   ```
-
-3. **Start the local Dev Server:**
-   ```bash
-   npm run dev
-   ```
-
-> [!IMPORTANT]
-> Since this project heavily utilizes `vite-plugin-compression` and hundreds of high-res textures, your initial local load might take a few seconds as the dev-server buffers asset delivery. For performance testing, always run `npm run build && npm run preview`.
-
-## 🤝 Contributing & Feedback
-
-All PRs improving the shader physics, 3D math logic, or component memoization runtimes are welcome. Please refer to our new `.github` Issue and Pull Request templates when submitting!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingRoom`)
-
-
-## License
-
-The code in this repository is licensed under the [MIT License](LICENSE). 
-**Note:** All personal assets, 3D textures, images, and copywriting are copyright of Tomasz Szmajda and may not be reused or reproduced without explicit permission.
-3. Commit your Changes (`git commit -m 'feat: Added realistic liquid simulation to Contact Room'`)
-4. Push to the Branch (`git push origin feature/AmazingRoom`)
-5. Open a Pull Request
-
----
-
-*Designed and Developed by [Tomasz Szmajda (ITom Dev)](https://itomdev.com).*
+Based on [Tomasz Szmajda](https://github.com/ITomPoland)'s open-source 3D portfolio template: **[ITomPoland/portfolio-itom](https://github.com/ITomPoland/portfolio-itom)** (MIT License). Personalized, extended, and maintained by **Amit Kumar Yadav (AMIT)**.
